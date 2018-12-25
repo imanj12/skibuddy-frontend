@@ -46,13 +46,21 @@ class App extends Component {
   render() {
     return (
       <Grid columns={2} stackable>
-        <Grid.Column width={6}>
+        <Grid.Column width={5}>
           <NavBar />
         </Grid.Column>
-        <Grid.Column width={10}>
-          <RegionContainer regions={this.state.userData ? this.getUserRegions() : null}/>
-          <MountainContainer mountains={this.state.userData ? this.state.userData.mountains : null}/>
-          <MountainDetails />
+        <Grid.Column width={11}>
+          <Grid stackable>
+            <Grid.Row>
+              <RegionContainer regions={this.state.userData ? this.getUserRegions() : null}/>
+            </Grid.Row>
+            <Grid.Row>
+              <MountainContainer mountains={this.state.userData ? this.state.userData.mountains : null}/>
+            </Grid.Row>
+            <Grid.Row>
+              <MountainDetails />
+            </Grid.Row>
+          </Grid>  
         </Grid.Column>  
       </Grid>
     )
