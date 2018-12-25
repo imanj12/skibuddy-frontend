@@ -1,9 +1,9 @@
 import React from 'react'
 import MountainCard from '../components/MountainCard'
 
-const MountainContainer = () => {
+const MountainContainer = (props) => {
    return (
-      null
+      props.mountains ? props.mountains.map((mtn, i) => <MountainCard key={i} mountain={mtn} />) : null
    )
 }
 

@@ -6,7 +6,8 @@ import NavBar from './components/NavBar'
 import RegionContainer from './containers/RegionContainer'
 import MountainContainer from './containers/MountainContainer'
 import MountainDetails from './components/MountainDetails'
-import {Grid, Segment} from 'semantic-ui-react'
+import {Grid} from 'semantic-ui-react'
+import {Route, Switch} from 'react-router-dom'
 
 class App extends Component {
   constructor() {
@@ -50,7 +51,7 @@ class App extends Component {
         </Grid.Column>
         <Grid.Column width={10}>
           <RegionContainer regions={this.state.userData ? this.getUserRegions() : null}/>
-          <MountainContainer />
+          <MountainContainer mountains={this.state.userData ? this.state.userData.mountains : null}/>
           <MountainDetails />
         </Grid.Column>  
       </Grid>

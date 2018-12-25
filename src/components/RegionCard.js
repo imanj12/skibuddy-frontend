@@ -26,24 +26,22 @@ class RegionCard extends Component {
 	render() {
 		return (
 			<Fragment>
-				<a>
-					<Card>
-						<Image src='https://www.worldatlas.com/r/w728-h425-c728x425/upload/44/5d/77/shutterstock-519106648.jpg' />
-						<Card.Content>
-							<Card.Header>{this.props.region.name}</Card.Header>
-							<Card.Meta>
-								<span className='date'>Average snowfall</span>
-							</Card.Meta>
-							<Card.Description>Description here</Card.Description>
-						</Card.Content>
-						<Card.Content extra>
-							<a>
-								<Icon name='world' />
-								{this.state.mountains.length} Mountains
-							</a>
-						</Card.Content>
-					</Card>
-				</a>
+				<Card>
+					<Image src='https://www.worldatlas.com/r/w728-h425-c728x425/upload/44/5d/77/shutterstock-519106648.jpg' />
+					<Card.Content>
+						<Card.Header>{this.props.region.name}</Card.Header>
+						<Card.Meta>
+							<span className='date'>Average snowfall</span>
+						</Card.Meta>
+						<Card.Description>Description here</Card.Description>
+					</Card.Content>
+					<Card.Content extra>
+						<a>
+							<Icon name='world' />
+							{this.state.mountains.length} Mountains
+						</a>
+					</Card.Content>
+				</Card>
 	 		</Fragment>
 	  )
 	}
