@@ -7,7 +7,7 @@ import RegionContainer from './containers/RegionContainer'
 import MountainContainer from './containers/MountainContainer'
 import MountainDetails from './components/MountainDetails'
 import {Grid, Segment} from 'semantic-ui-react'
-// import {Route, Switch} from 'react-router-dom'
+import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import './style/css/weather-icons.min.css'
 
 class App extends Component {
@@ -53,19 +53,38 @@ class App extends Component {
 
   render() {
     return (
-      <Fragment>
-        <NavBar />
-        <Grid columns={5} stackable centered>
-          <Grid.Row>
-            <RegionContainer regions={this.state.userData ? this.getUserRegions() : null}/>
-          </Grid.Row>
-          <Grid.Row>
-            {/* <MountainContainer mountains={this.state.userData ? this.state.userData.mountains : null} setMountain={this.setMountain}/> */}
-            {this.state.userData ? <MountainContainer mountains={this.state.userData.region ? this.state.userData.region : this.state.userData.mountains} setMountain={this.setMountain}/> : null}
-          </Grid.Row>
-        </Grid>
-        {this.state.mountain ? <MountainDetails mountain={this.state.mountain}/> : null}  
-      </Fragment>
+      <BrowserRouter>
+        <Fragment>
+          <NavBar />
+          <Switch>
+            <Route exact path='/' render={() => (
+              <Fragment>
+              <Grid columns={5} stackable centered>
+                <Grid.Row>
+                  <RegionContainer regions={this.state.userData ? this.getUserRegions() : null}/>
+                </Grid.Row>
+                <Grid.Row>
+                  {/* <MountainContainer mountains={this.state.userData ? this.state.userData.mountains : null} setMountain={this.setMountain}/> */}
+                  {this.state.userData ? <MountainContainer mountains={this.state.userData.region ? this.state.userData.region : this.state.userData.mountains} setMountain={this.setMountain}/> : null}
+                </Grid.Row>
+              </Grid>
+              {/* {this.state.mountain ? <MountainDetails mountain={this.state.mountain}/> : null} */}
+            </Fragment>
+            )} /> 
+            <Route path='/regions' render={() => (
+              <Grid columns={5} stackable centered>
+                <Grid.Row>
+                  <RegionContainer regions={this.state.userData ? this.getUserRegions() : null}/>
+                </Grid.Row>
+              </Grid>
+            )} />
+            <Route path='/mountains/:id' render={(props) => {
+              let mtnId = props.match.params.id
+              return <MountainDetails mountain={this.state.userData.mountains.find(mtn => mtn.id == mtnId)}/>
+            }} />
+          </Switch>
+        </Fragment>
+      </BrowserRouter>
     )
   }
 }

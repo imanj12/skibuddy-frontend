@@ -1,10 +1,11 @@
 import React, {Fragment} from 'react'
 import { Card, Icon, Image } from 'semantic-ui-react'
+import {Link} from 'react-router-dom'
 
 const MountainCard = (props) => {
    return (
       <Fragment>
-         <Card className ='textalign-center' onClick={() => props.setMountain(props.mountain.id)}>
+         <Card className ='textalign-center' as={Link} to={`/mountains/${props.mountain.id}`}>
             <Image src='https://www.worldatlas.com/r/w728-h425-c728x425/upload/44/5d/77/shutterstock-519106648.jpg' />
             <Card.Content>
                <Card.Header>{props.mountain.name}</Card.Header>
@@ -23,3 +24,5 @@ const MountainCard = (props) => {
 }
 
 export default MountainCard
+
+// onClick={() => props.setMountain(props.mountain.id)}
