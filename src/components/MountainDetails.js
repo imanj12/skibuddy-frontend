@@ -93,8 +93,8 @@ class MountainDetails extends Component {
          <Fragment>
             <Header as='h2' icon textAlign='center'>
                {/* <Icon name='globe' circular /> */}
-               <Header.Content>{mountain.name}</Header.Content>
-               <Header.Subheader>{mountain.city}, {mountain.state}</Header.Subheader>
+               <Header.Content>{mountain ? mountain.name : null}</Header.Content>
+               <Header.Subheader>{mountain ? mountain.city : null}, {mountain ? mountain.state : null}</Header.Subheader>
             </Header>
             <Grid columns={2} centered stackable>
                <Grid.Row>

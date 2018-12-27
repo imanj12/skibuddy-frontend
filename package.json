@@ -15,6 +15,7 @@
     "recharts": "^1.4.2",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.84.0",
+    "usa-states": "0.0.5",
     "weather-icons-npm": "^10.0.0"
   },
   "scripts": {

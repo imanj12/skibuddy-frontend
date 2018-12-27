@@ -11,10 +11,11 @@ export default class NavBar extends Component {
      const { activeItem } = this.state
  
      return (
-       <Menu>
+       <Menu pointing>
          <Menu.Item as={Link} to='/' 
          name='home' 
          active={activeItem === 'home'} 
+         onClick={this.handleItemClick}
          />
          <Menu.Item as={Link} to='/regions'
            name='regions'
@@ -22,8 +23,13 @@ export default class NavBar extends Component {
            onClick={this.handleItemClick}
          />
          <Menu.Item as={Link} to='/mountains'
-           name='all mountains'
+           name='mountains'
            active={activeItem === 'mountains'}
+           onClick={this.handleItemClick}
+         />
+         <Menu.Item as={Link} to='/new'
+           name='new mountain'
+           active={activeItem === 'new mountain'}
            onClick={this.handleItemClick}
          />
          <Menu.Menu position='right'>

@@ -34,3 +34,11 @@
 .textalign-center {
   text-align: center;
 }
+
+body {
+  background-image: url('https://summerwatersports.com/wp-content/uploads/2016/12/Background-Snow.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
