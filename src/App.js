@@ -1,13 +1,14 @@
 import React, { Component, Fragment } from 'react';
 import 'semantic-ui-css/semantic.min.css'
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 import NavBar from './components/NavBar'
 import RegionContainer from './containers/RegionContainer'
 import MountainContainer from './containers/MountainContainer'
 import MountainDetails from './components/MountainDetails'
-import {Grid} from 'semantic-ui-react'
-import {Route, Switch} from 'react-router-dom'
+import {Grid, Segment} from 'semantic-ui-react'
+// import {Route, Switch} from 'react-router-dom'
+import './style/css/weather-icons.min.css'
 
 class App extends Component {
   constructor() {
@@ -43,26 +44,28 @@ class App extends Component {
     return result
   }
 
+  setMountain = (mtnId) => {
+    let url = `http://localhost:3000/mountains/${mtnId}`
+    fetch(url)
+      .then(res => res.json())
+      .then(mtn => this.setState({mountain: mtn}))
+  }
+
   render() {
     return (
-      <Grid columns={2} stackable>
-        <Grid.Column width={5}>
-          <NavBar />
-        </Grid.Column>
-        <Grid.Column width={11}>
-          <Grid stackable>
-            <Grid.Row>
-              <RegionContainer regions={this.state.userData ? this.getUserRegions() : null}/>
-            </Grid.Row>
-            <Grid.Row>
-              <MountainContainer mountains={this.state.userData ? this.state.userData.mountains : null}/>
-            </Grid.Row>
-            <Grid.Row>
-              <MountainDetails />
-            </Grid.Row>
-          </Grid>  
-        </Grid.Column>  
-      </Grid>
+      <Fragment>
+        <NavBar />
+        <Grid stackable centered>
+          <Grid.Row>
+            <RegionContainer regions={this.state.userData ? this.getUserRegions() : null}/>
+          </Grid.Row>
+          <Grid.Row>
+            {/* <MountainContainer mountains={this.state.userData ? this.state.userData.mountains : null} setMountain={this.setMountain}/> */}
+            {this.state.userData ? <MountainContainer mountains={this.state.userData.region ? this.state.userData.region : this.state.userData.mountains} setMountain={this.setMountain}/> : null}
+          </Grid.Row>
+        </Grid>
+        {this.state.mountain ? <MountainDetails mountain={this.state.mountain}/> : null}  
+      </Fragment>
     )
   }
 }

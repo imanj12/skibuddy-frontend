@@ -5,7 +5,7 @@ class RegionCard extends Component {
   constructor() {
 	  super()
 	  this.state = {
-			region: null,
+			// region: null,
 			mountains: []
 	  }
 	}
@@ -19,14 +19,14 @@ class RegionCard extends Component {
 	}
 
   componentDidMount() {
-		this.setState({region: this.props.region})
+		// this.setState({region: this.props.region})
 		this.fetchMountains()
   }
   
 	render() {
 		return (
 			<Fragment>
-				<Card>
+				<Card className='cards'>
 					<Image src='https://www.worldatlas.com/r/w728-h425-c728x425/upload/44/5d/77/shutterstock-519106648.jpg' />
 					<Card.Content>
 						<Card.Header>{this.props.region.name}</Card.Header>
@@ -36,10 +36,8 @@ class RegionCard extends Component {
 						<Card.Description>Description here</Card.Description>
 					</Card.Content>
 					<Card.Content extra>
-						<a>
-							<Icon name='world' />
-							{this.state.mountains.length} Mountains
-						</a>
+						<Icon name='world' />
+						{this.state.mountains.length} Mountains
 					</Card.Content>
 				</Card>
 	 		</Fragment>
