@@ -4,7 +4,7 @@ import {Segment, Grid} from 'semantic-ui-react'
 
 const RegionContainer = (props) => {
    return (
-      props.regions ? props.regions.map((region, i) => <Grid.Column><Segment basic key={i}><RegionCard key={i} region={region} /></Segment></Grid.Column>) : null
+      props.regions ? props.regions.map((region, i) => <Grid.Column key={i}><Segment basic><RegionCard region={region} /></Segment></Grid.Column>) : null
    )
 }
 

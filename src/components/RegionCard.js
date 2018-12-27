@@ -1,5 +1,6 @@
 import React, {Component, Fragment} from 'react'
 import { Card, Icon, Image } from 'semantic-ui-react'
+import {Link} from 'react-router-dom'
 
 class RegionCard extends Component {
   constructor() {
@@ -26,7 +27,7 @@ class RegionCard extends Component {
 	render() {
 		return (
 			<Fragment>
-				<Card className='textalign-center'>
+				<Card className='textalign-center' as={Link} to={`/regions/${this.props.region.id}`}>
 					<Image src='https://www.worldatlas.com/r/w728-h425-c728x425/upload/44/5d/77/shutterstock-519106648.jpg' />
 					<Card.Content>
 						<Card.Header>{this.props.region.name}</Card.Header>

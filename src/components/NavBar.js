@@ -21,9 +21,9 @@ export default class NavBar extends Component {
            active={activeItem === 'regions'}
            onClick={this.handleItemClick}
          />
-         <Menu.Item
-           name='friends'
-           active={activeItem === 'friends'}
+         <Menu.Item as={Link} to='/mountains'
+           name='all mountains'
+           active={activeItem === 'mountains'}
            onClick={this.handleItemClick}
          />
          <Menu.Menu position='right'>

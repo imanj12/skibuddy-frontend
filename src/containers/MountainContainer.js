@@ -5,8 +5,10 @@ import {Segment, Grid} from 'semantic-ui-react'
 
 const MountainContainer = (props) => {
    return (
-      props.mountains ? props.mountains.map((mtn, i) => <Grid.Column><Segment basic key={i}><MountainCard key={i} mountain={mtn} setMountain={props.setMountain} /></Segment></Grid.Column>) : null
+      props.mountains ? props.mountains.map((mtn, i) => <Grid.Column key={i}><Segment basic ><MountainCard mountain={mtn} /></Segment></Grid.Column>) : null
    )
 }
 
 export default MountainContainer
+
+// setMountain={props.setMountain} 
