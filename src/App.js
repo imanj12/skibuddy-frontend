@@ -55,7 +55,7 @@ class App extends Component {
     return (
       <Fragment>
         <NavBar />
-        <Grid stackable centered>
+        <Grid columns={5} stackable centered>
           <Grid.Row>
             <RegionContainer regions={this.state.userData ? this.getUserRegions() : null}/>
           </Grid.Row>

@@ -26,14 +26,14 @@ class RegionCard extends Component {
 	render() {
 		return (
 			<Fragment>
-				<Card className='cards'>
+				<Card className='textalign-center'>
 					<Image src='https://www.worldatlas.com/r/w728-h425-c728x425/upload/44/5d/77/shutterstock-519106648.jpg' />
 					<Card.Content>
 						<Card.Header>{this.props.region.name}</Card.Header>
-						<Card.Meta>
+						{/* <Card.Meta>
 							<span className='date'>Average snowfall</span>
-						</Card.Meta>
-						<Card.Description>Description here</Card.Description>
+						</Card.Meta> */}
+						{/* <Card.Description>Description here</Card.Description> */}
 					</Card.Content>
 					<Card.Content extra>
 						<Icon name='world' />

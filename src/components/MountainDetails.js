@@ -110,8 +110,8 @@ class MountainDetails extends Component {
                      <Segment basic>
                         <Header as='h3' textAlign='center' content='Forecast'></Header>
                         <p className='textalign-center'><strong>Summary</strong></p>
-                        <p>{this.state.weather ? this.state.weather.daily.summary : null}</p>
-                        <ResponsiveContainer width='80%' height={400}>
+                        <p className='textalign-center'>{this.state.weather ? this.state.weather.daily.summary : null}</p>
+                        <ResponsiveContainer width='100%' height={400}>
                            <ComposedChart data={this.state.forecastChartData ? this.state.forecastChartData : null} margin={{top: 20, right: 20, bottom: 20, left: 20}}>
                               <CartesianGrid stroke='#f5f5f5'/>
                               <XAxis dataKey="name"/>
@@ -129,13 +129,14 @@ class MountainDetails extends Component {
                </Grid.Row>
                <Grid.Row>
                   <Grid.Column>
-                     <Segment>
-
+                     <Segment basic>
+                        <Header as ='h3' textAlign='center' content='Interactive Trail Map'></Header>
+                        <iframe src={`https://openskimap.org/#12/${this.state.lat}/${this.state.lon}`} height="400" width="100%" frameBorder="0"></iframe>
                      </Segment>
                   </Grid.Column>
                   <Grid.Column>
-                     <Segment>
-                        
+                     <Segment basic>
+                        <p className='textalign-center'>Drive Time here</p>
                      </Segment>
                   </Grid.Column>
                </Grid.Row>
