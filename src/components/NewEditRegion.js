@@ -2,11 +2,8 @@ import React, {Component, Fragment} from 'react'
 import {Form, Header, Button, Icon} from 'semantic-ui-react'
 
 class NewEditRegion extends Component {
-   constructor() {
-      super()
-      this.state = {
-         name: ''
-      }
+   state = {
+      name: ''
    }
 
    handleChange = (event, data) => {
@@ -15,7 +12,10 @@ class NewEditRegion extends Component {
 
    handleSubmit = (event) => {
       event.preventDefault()
-      const data = {name: this.state.name}
+      const data = {
+         name: this.state.name,
+         user_id: this.props.userId
+      }
       const url = 'http://localhost:3000/regions'
       fetch(url, {
          method: 'POST',
@@ -24,6 +24,7 @@ class NewEditRegion extends Component {
          },
          body: JSON.stringify(data)
       })
+         .then(() => this.props.userFetch())
    }
 
    render() {

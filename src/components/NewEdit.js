@@ -2,24 +2,18 @@ import React, {Component, Fragment} from 'react'
 import {Form, Header, Button, Icon} from 'semantic-ui-react'
 
 class NewEdit extends Component {
-   constructor(props) {
-      super(props)
-      this.state = {
-         name: '',
-         city: '',
-         state: '',
-         trailmap: '',
-         url: '',
-         region_id: 0,
-         user_id: '',
-         regions: []
-      }
+   state = {
+      name: '',
+      city: '',
+      state: '',
+      trailmap: '',
+      url: '',
+      region_id: 0,
+      user_id: '',
+      regions: []
    }
 
-   componentDidMount() {
-      
-   }
-
+   // populate select box options in right format
    getStates = () => {
       // semantic UI select options in this format:
       // [{ key: 'af', value: 'af', text: 'Afghanistan' }, ...{}]
@@ -31,7 +25,8 @@ class NewEdit extends Component {
       }
       return states
    }
-
+   
+   // populate select box options in right format
    getRegions = () => {
       let userRegions = this.props.regions
       let regions = []
@@ -55,11 +50,9 @@ class NewEdit extends Component {
          url: this.state.url,
          user_id: this.props.userId
       }
-
       if (this.state.region_id !== 0) {
          data.region_id = this.state.region_id
       }
-
       let url = 'http://localhost:3000/mountains'
       fetch(url, {
          method: 'POST',
@@ -68,28 +61,11 @@ class NewEdit extends Component {
          },
          body: JSON.stringify(data)
       })
-   }
-
-   handleNewRegion = (event, data) => {
-      console.log('test')
+      .then(() => this.props.userFetch())
    }
 
    handleSubmit = (event) => {
       event.preventDefault()
-      // if (this.state.region_name !== '') {
-      //    let regionData = {name: this.state.region_name}
-      //    let regionUrl = 'http://localhost:3000/regions'
-      //    fetch(regionUrl, {
-      //       method: 'POST',
-      //       headers: {
-      //          "Content-Type":"application/json"
-      //       },
-      //       body: JSON.stringify(regionData)
-      //    })
-      //       .then(() => {
-
-      //       })
-      // }
       this.postMountain()
    }
 

@@ -31,23 +31,6 @@ class App extends Component {
       .then(userData => this.setState({userData: userData}))
   }
 
-  // get unique regions
-  getUserRegions = () => {
-    const regions = this.state.userData.regions
-    const result = []
-    const map = new Map()
-    for (const region of regions) {
-        if(!map.has(region.id)){
-            map.set(region.id, true)
-            result.push({
-                id: region.id,
-                name: region.name
-            })
-        }
-    }
-    return result
-  }
-
   render() {
     return (
       <BrowserRouter>
@@ -58,7 +41,7 @@ class App extends Component {
               <Fragment>
               <Grid columns={5} stackable centered>
                 <Grid.Row>
-                  <RegionContainer regions={this.state.userData ? this.getUserRegions() : null}/>
+                  <RegionContainer regions={this.state.userData ? this.state.userData.regions : null}/>
                 </Grid.Row>
                 <Grid.Row>
                   <MountainContainer mountains={this.state.userData ? this.state.userData.mountains : null}/>
@@ -81,7 +64,7 @@ class App extends Component {
             <Route path='/regions' render={() => (
               <Grid columns={5} stackable centered>
                 <Grid.Row>
-                  <RegionContainer regions={this.state.userData ? this.getUserRegions() : null}/>
+                  <RegionContainer regions={this.state.userData ? this.state.userData.regions : null}/>
                 </Grid.Row>
               </Grid>
             )} />
@@ -102,7 +85,7 @@ class App extends Component {
             <Route path='/new' render={() => (
               <Grid columns={1} stackable centered>
                 <Grid.Row>
-                  <NewEdit regions={this.state.userData ? this.getUserRegions() : null} userId={this.state.userData ? this.state.userData.id : null} userFetch={this.userFetch}/>
+                  <NewEdit regions={this.state.userData ? this.state.userData.regions : null} userId={this.state.userData ? this.state.userData.id : null} userFetch={this.userFetch}/>
                 </Grid.Row>
               </Grid>
             )}/>
@@ -110,7 +93,7 @@ class App extends Component {
             <Route path='/newregion' render={() => (
               <Grid columns={1} stackable centered>
                 <Grid.Row>
-                  <NewEditRegion />
+                  <NewEditRegion userId={this.state.userData ? this.state.userData.id : null} userFetch={this.userFetch}/>
                 </Grid.Row>
               </Grid>
             )} />
