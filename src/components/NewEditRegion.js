@@ -1,5 +1,6 @@
-import React, {Component, Fragment} from 'react'
-import {Form, Header, Button, Icon} from 'semantic-ui-react'
+import React, {Component} from 'react'
+import {Form, Header, Button} from 'semantic-ui-react'
+import {withRouter} from 'react-router-dom'
 
 class NewEditRegion extends Component {
    state = {
@@ -25,6 +26,7 @@ class NewEditRegion extends Component {
          body: JSON.stringify(data)
       })
          .then(() => this.props.userFetch())
+         .then(() => this.props.history.push('/regions'))
    }
 
    render() {
@@ -38,5 +40,5 @@ class NewEditRegion extends Component {
    }
 }
 
-export default NewEditRegion
+export default withRouter(NewEditRegion)
 

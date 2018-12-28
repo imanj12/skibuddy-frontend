@@ -1,16 +1,17 @@
 import React, {Fragment} from 'react'
-import { Card, Icon, Image } from 'semantic-ui-react'
+import { Card, Image } from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
 
 const MountainCard = (props) => {
+   const { mountain } = props
    return (
       <Fragment>
-         <Card className ='textalign-center' as={Link} to={`/mountains/${props.mountain.id}`}>
+         <Card className ='textalign-center' as={Link} to={`/mountains/${mountain.id}`}>
             <Image src='https://www.worldatlas.com/r/w728-h425-c728x425/upload/44/5d/77/shutterstock-519106648.jpg' />
             <Card.Content>
-               <Card.Header>{props.mountain.name}</Card.Header>
+               <Card.Header>{mountain.name}</Card.Header>
                <Card.Meta>
-                  <span className='date'>{props.mountain.city}, {props.mountain.state}</span>
+                  <span className='date'>{mountain.city}, {mountain.state}</span>
                </Card.Meta>
                {/* <Card.Description>Description here</Card.Description> */}
             </Card.Content>
@@ -24,5 +25,3 @@ const MountainCard = (props) => {
 }
 
 export default MountainCard
-
-// onClick={() => props.setMountain(props.mountain.id)}

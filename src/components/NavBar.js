@@ -27,12 +27,12 @@ export default class NavBar extends Component {
            active={activeItem === 'mountains'}
            onClick={this.handleItemClick}
          />
-         <Menu.Item as={Link} to='/new'
+         <Menu.Item as={Link} to='/mountains/new'
            name='new mountain'
            active={activeItem === 'new mountain'}
            onClick={this.handleItemClick}
          />
-         <Menu.Item as={Link} to='/newregion'
+         <Menu.Item as={Link} to='/regions/new'
            name='new region'
            active={activeItem === 'new region'}
            onClick={this.handleItemClick}

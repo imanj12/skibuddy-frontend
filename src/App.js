@@ -8,7 +8,7 @@ import MountainContainer from './containers/MountainContainer'
 import MountainDetails from './components/MountainDetails'
 import NewEdit from './components/NewEdit'
 import NewEditRegion from './components/NewEditRegion'
-import {Grid, Segment} from 'semantic-ui-react'
+import {Grid} from 'semantic-ui-react'
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import './style/css/weather-icons.min.css'
 
@@ -49,13 +49,21 @@ class App extends Component {
               </Grid>
             </Fragment>
             )} /> 
+
+            <Route path='/regions/new' render={() => (
+              <Grid columns={1} stackable centered>
+                <Grid.Row>
+                  <NewEditRegion userId={this.state.userData ? this.state.userData.id : null} userFetch={this.userFetch}/>
+                </Grid.Row>
+              </Grid>
+            )} />
             
             <Route path='/regions/:id' render={(props) => {
-              let rgnId = props.match.params.id
+              let rgnId = parseInt(props.match.params.id)
               return (
                 <Grid columns={5} stackable centered>
                   <Grid.Row>
-                    <MountainContainer mountains={this.state.userData ? this.state.userData.mountains.filter(mtn => mtn.region_id == rgnId) : null}/>
+                    <MountainContainer mountains={this.state.userData ? this.state.userData.mountains.filter(mtn => mtn.region_id === rgnId) : null}/>
                   </Grid.Row>
                 </Grid>
               )
@@ -69,31 +77,24 @@ class App extends Component {
               </Grid>
             )} />
             
+            <Route path='/mountains/new' render={() => (
+              <NewEdit regions={this.state.userData ? this.state.userData.regions : null} userId={this.state.userData ? this.state.userData.id : null} userFetch={this.userFetch}/>
+            )}/>
+
+            <Route path='/mountains/:id/edit' render={(props) => {
+              let chosenMtn = this.state.userData.mountains.find(mtn => mtn.id == props.match.params.id)
+              return <NewEdit regions={this.state.userData ? this.state.userData.regions : null} userId={this.state.userData ? this.state.userData.id : null} userFetch={this.userFetch} mountain={chosenMtn}/>
+            }}/>
+
             <Route path='/mountains/:id' render={(props) => {
               let mtnId = props.match.params.id
-              return <MountainDetails mountain={this.state.userData ? this.state.userData.mountains.find(mtn => mtn.id == mtnId) : null}/>
+              return <MountainDetails mountain={this.state.userData ? this.state.userData.mountains.find(mtn => mtn.id == mtnId) : null} userFetch={this.userFetch}/>
             }} />
             
             <Route path='/mountains' render={() => (
               <Grid columns={5} stackable centered>
                 <Grid.Row>
                   <MountainContainer mountains={this.state.userData ? this.state.userData.mountains : null}/>
-                </Grid.Row>
-              </Grid>
-            )} />
-
-            <Route path='/new' render={() => (
-              <Grid columns={1} stackable centered>
-                <Grid.Row>
-                  <NewEdit regions={this.state.userData ? this.state.userData.regions : null} userId={this.state.userData ? this.state.userData.id : null} userFetch={this.userFetch}/>
-                </Grid.Row>
-              </Grid>
-            )}/>
-
-            <Route path='/newregion' render={() => (
-              <Grid columns={1} stackable centered>
-                <Grid.Row>
-                  <NewEditRegion userId={this.state.userData ? this.state.userData.id : null} userFetch={this.userFetch}/>
                 </Grid.Row>
               </Grid>
             )} />

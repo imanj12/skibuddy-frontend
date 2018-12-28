@@ -1,8 +1,8 @@
-import React, {Component, Fragment, PropTypes} from 'react'
-import WeatherDetails from './WeatherDetails'
-import { Header, Icon, Image, Grid, Segment } from 'semantic-ui-react'
+import React, {Component, Fragment} from 'react'
+import { Header, Grid, Segment, Button } from 'semantic-ui-react'
 import {ResponsiveContainer, ComposedChart, Line, Area, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'recharts'
 import * as moment from 'moment'
+import {Link, withRouter} from 'react-router-dom'
 
 class MountainDetails extends Component {
    constructor() {
@@ -25,6 +25,7 @@ class MountainDetails extends Component {
       }
    }
 
+   // starts a chain of function calls that each depend on new state
    getLatLons = () => {
       let url = `http://localhost:3000/geocode/${this.props.mountain.name}%20ski%20${this.props.mountain.state}`
       fetch(url)
@@ -37,15 +38,19 @@ class MountainDetails extends Component {
       })
    }
 
-   //fires inside getLatLons
+   // invoked inside getLatLons after set state
    getWeather = () => {
       let url = `http://localhost:3000/weather/forecast/${this.state.lat}/${this.state.lon}`
       fetch(url)
       .then(res => res.json())
-      .then(data => this.setState({weather: data}, () => this.setWeatherData()))
+      .then(data => {
+         this.setState({
+            weather: data
+         }, () => this.setWeatherData())
+      })
    }
 
-   // fires inside getWeather
+   // invoked inside getWeather after set state
    setWeatherData = () => {
       let t = moment().format('dd')
       let tOne = moment().add(1, 'days').format('dd')
@@ -55,7 +60,7 @@ class MountainDetails extends Component {
       let tFive = moment().add(5, 'days').format('dd')
       let tSix = moment().add(6, 'days').format('dd')
       let tSeven = moment().add(7, 'days').format('dd')
-
+      
       const data = [
          {name: t, snow: 0, tmp: 0, rain: 0},
          {name: tOne, snow: 0, tmp: 0, rain: 0},
@@ -82,7 +87,19 @@ class MountainDetails extends Component {
          }
       }
       this.setState({forecastChartData: data})
-   } 
+   }
+   
+   delete = (event) => {
+      let url = `http://localhost:3000/mountains/${this.props.mountain.id}`
+      fetch(url, {
+         method: 'DELETE',
+         headers: {
+
+         }
+      })
+      .then(() => this.props.userFetch())
+      .then(() => this.props.history.push('/'))
+   }
 
    render() {
       const { mountain } = this.props
@@ -131,12 +148,24 @@ class MountainDetails extends Component {
                   <Grid.Column>
                      <Segment basic>
                         <Header as ='h3' textAlign='center' content='Interactive Trail Map'></Header>
-                        <iframe src={`https://openskimap.org/#12/${this.state.lat}/${this.state.lon}`} height="400" width="100%" frameBorder="0"></iframe>
+                        <iframe title={mountain? mountain.name : null} src={`https://openskimap.org/#12/${this.state.lat}/${this.state.lon}`} height="400" width="100%" frameBorder="0"></iframe>
                      </Segment>
                   </Grid.Column>
                   <Grid.Column>
                      <Segment basic>
                         <p className='textalign-center'>Drive Time here</p>
+                     </Segment>
+                  </Grid.Column>
+               </Grid.Row>
+               <Grid.Row>
+                  <Grid.Column>
+                     <Segment basic>
+                        <Button fluid content='Edit' color='blue' as={Link} to={`/mountains/${mountain.id}/edit`}/>
+                     </Segment>
+                  </Grid.Column>
+                  <Grid.Column>
+                     <Segment basic>
+                        <Button fluid content='Delete' color='red' onClick={this.delete}/>
                      </Segment>
                   </Grid.Column>
                </Grid.Row>
@@ -146,4 +175,4 @@ class MountainDetails extends Component {
    }
 }
 
-export default MountainDetails
+export default withRouter(MountainDetails)
