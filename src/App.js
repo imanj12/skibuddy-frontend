@@ -7,6 +7,7 @@ import RegionContainer from './containers/RegionContainer'
 import MountainContainer from './containers/MountainContainer'
 import MountainDetails from './components/MountainDetails'
 import NewEdit from './components/NewEdit'
+import NewEditRegion from './components/NewEditRegion'
 import {Grid, Segment} from 'semantic-ui-react'
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import './style/css/weather-icons.min.css'
@@ -15,14 +16,16 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
-      userData: null,
-      region: null,
-      mountain: null
+      userData: null
     }
   }
 
-  // fetch data of specific user
   componentDidMount() {
+    this.userFetch()
+  }
+
+  // fetch data of specific user
+  userFetch = () => {
     fetch('http://localhost:3000/users/1')
       .then(res => res.json())
       .then(userData => this.setState({userData: userData}))
@@ -43,13 +46,6 @@ class App extends Component {
         }
     }
     return result
-  }
-
-  setMountain = (mtnId) => {
-    let url = `http://localhost:3000/mountains/${mtnId}`
-    fetch(url)
-      .then(res => res.json())
-      .then(mtn => this.setState({mountain: mtn}))
   }
 
   render() {
@@ -106,10 +102,18 @@ class App extends Component {
             <Route path='/new' render={() => (
               <Grid columns={1} stackable centered>
                 <Grid.Row>
-                  <NewEdit regions={this.state.userData ? this.getUserRegions() : null} userId={this.state.userData ? this.state.userData.id : null}/>
+                  <NewEdit regions={this.state.userData ? this.getUserRegions() : null} userId={this.state.userData ? this.state.userData.id : null} userFetch={this.userFetch}/>
                 </Grid.Row>
               </Grid>
             )}/>
+
+            <Route path='/newregion' render={() => (
+              <Grid columns={1} stackable centered>
+                <Grid.Row>
+                  <NewEditRegion />
+                </Grid.Row>
+              </Grid>
+            )} />
 
           </Switch>
         </Fragment>

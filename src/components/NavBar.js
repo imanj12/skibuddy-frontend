@@ -32,6 +32,11 @@ export default class NavBar extends Component {
            active={activeItem === 'new mountain'}
            onClick={this.handleItemClick}
          />
+         <Menu.Item as={Link} to='/newregion'
+           name='new region'
+           active={activeItem === 'new region'}
+           onClick={this.handleItemClick}
+         />
          <Menu.Menu position='right'>
            <Menu.Item>
              <Input icon='search' placeholder='Search...' />
