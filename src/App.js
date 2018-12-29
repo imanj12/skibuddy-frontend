@@ -8,6 +8,7 @@ import MountainContainer from './containers/MountainContainer'
 import MountainDetails from './components/MountainDetails'
 import NewEdit from './components/NewEdit'
 import NewEditRegion from './components/NewEditRegion'
+import Login from './components/Login'
 import {Grid} from 'semantic-ui-react'
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import './style/css/weather-icons.min.css'
@@ -21,14 +22,35 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.userFetch()
+    // this.userLogin('iman', 'iman')
   }
 
-  // fetch data of specific user
+  // login function
+  userLogin = (username, password) => {
+    let url = 'http://localhost:3000/login'
+    let data = { user: { username: username, password: password } }
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        "Content-Type":"application/json"
+      },
+      body: JSON.stringify(data)
+    })
+      .then(r => r.json())
+      .then(data => this.setState({userData: data.user}))
+  }
+
+  // fetch data of specific user - deprecated possibly
   userFetch = () => {
     fetch('http://localhost:3000/users/1')
       .then(res => res.json())
       .then(userData => this.setState({userData: userData}))
+  }
+
+  handleLoginSubmit = (event, data) => {
+    let username = event.target.username.value
+    let password = event.target.password.value
+    this.userLogin(username, password)
   }
 
   render() {
@@ -37,6 +59,10 @@ class App extends Component {
         <Fragment>
           <NavBar />
           <Switch>
+            <Route path='/login' render={() => (
+              <Login handleLoginSubmit={this.handleLoginSubmit}/>
+            )} />
+            
             <Route exact path='/' render={() => (
               <Grid columns={5} stackable centered>
                 <Grid.Row>
