@@ -38,7 +38,6 @@ class App extends Component {
           <NavBar />
           <Switch>
             <Route exact path='/' render={() => (
-              <Fragment>
               <Grid columns={5} stackable centered>
                 <Grid.Row>
                   <RegionContainer regions={this.state.userData ? this.state.userData.regions : null}/>
@@ -47,7 +46,6 @@ class App extends Component {
                   <MountainContainer mountains={this.state.userData ? this.state.userData.mountains : null}/>
                 </Grid.Row>
               </Grid>
-            </Fragment>
             )} /> 
 
             <Route path='/regions/new' render={() => (

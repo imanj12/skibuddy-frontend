@@ -13,9 +13,9 @@ export default class NavBar extends Component {
      return (
        <Menu pointing>
          <Menu.Item as={Link} to='/' 
-         name='home' 
-         active={activeItem === 'home'} 
-         onClick={this.handleItemClick}
+          name='home' 
+          active={activeItem === 'home'} 
+          onClick={this.handleItemClick}
          />
          <Menu.Item as={Link} to='/regions'
            name='regions'
