@@ -55,21 +55,19 @@ class App extends Component {
             <Route exact path='/' render={() => <Redirect to='/login'/>} />
 
             <Route path='/login' render={() => (
-              <Login userData={this.state.userData} setUser={this.setUser}/>
+              <Login setUser={this.setUser}/>
             )} />
 
             <Route path='/signup' render={() => <SignUp />} />
             
             <Route path='/home' render={() => (
-              <Grid columns={5} stackable centered>
-                <Grid.Row>
-                  <RegionContainer regions={this.state.userData ? this.state.userData.regions : null}/>
-                </Grid.Row>
-                <Grid.Row>
-                  <MountainContainer mountains={this.state.userData ? this.state.userData.mountains : null}/>
-                </Grid.Row>
-              </Grid>
-            )} /> 
+              this.state.userData ? ( 
+                <Fragment>
+                  <RegionContainer regions={this.state.userData.regions}/>
+                  <MountainContainer mountains={this.state.userData.mountains}/>
+                </Fragment> 
+              ) : null
+            )} />
 
             <Route path='/regions/new' render={() => (
               <NewEditRegion userId={this.state.userData ? this.state.userData.id : null} userFetch={this.userFetch}/>
@@ -77,43 +75,37 @@ class App extends Component {
             
             <Route path='/regions/:id' render={(props) => {
               let rgnId = parseInt(props.match.params.id)
-              return (
-                <Grid columns={5} stackable centered>
-                  <Grid.Row>
-                    <MountainContainer mountains={this.state.userData ? this.state.userData.mountains.filter(mtn => mtn.region_id === rgnId) : null}/>
-                  </Grid.Row>
-                </Grid>
-              )
+              return this.state.userData ? (
+                <MountainContainer mountains={this.state.userData.mountains.filter(mtn => mtn.region_id === rgnId)}/>
+              ) : null
             }} />
             
             <Route path='/regions' render={() => (
-              <Grid columns={5} stackable centered>
-                <Grid.Row>
-                  <RegionContainer regions={this.state.userData ? this.state.userData.regions : null}/>
-                </Grid.Row>
-              </Grid>
+              this.state.userData ? <RegionContainer regions={this.state.userData.regions}/> : null
             )} />
             
             <Route path='/mountains/new' render={() => (
-              <NewEdit regions={this.state.userData ? this.state.userData.regions : null} userId={this.state.userData ? this.state.userData.id : null} userFetch={this.userFetch}/>
+              this.state.userData ? (
+                <NewEdit regions={this.state.userData.regions} userId={this.state.userData.id} userFetch={this.userFetch}/>
+              ) : null
             )} />
 
             <Route path='/mountains/:id/edit' render={(props) => {
-              let chosenMtn = this.state.userData.mountains.find(mtn => mtn.id == props.match.params.id)
-              return <NewEdit regions={this.state.userData ? this.state.userData.regions : null} userId={this.state.userData ? this.state.userData.id : null} userFetch={this.userFetch} mountain={chosenMtn}/>
+              let mtnId = props.match.params.id
+              return this.state.userData ? (
+                <NewEdit regions={this.state.userData.regions} userId={this.state.userData.id} userFetch={this.userFetch} mountain={this.state.userData.mountains.find(mtn => mtn.id == mtnId)}/>
+              ) : null
             }} />
 
             <Route path='/mountains/:id' render={(props) => {
               let mtnId = props.match.params.id
-              return this.state.userData ? <MountainDetails mountain={this.state.userData.mountains.find(mtn => mtn.id == mtnId)} userFetch={this.userFetch}/> : null
+              return this.state.userData ? (
+                <MountainDetails mountain={this.state.userData.mountains.find(mtn => mtn.id == mtnId)} userFetch={this.userFetch}/>
+              ) : null
             }} />
             
             <Route path='/mountains' render={() => (
-              <Grid columns={5} stackable centered>
-                <Grid.Row>
-                  {this.state.userData ? <MountainContainer mountains={this.state.userData.mountains}/> : null}
-                </Grid.Row>
-              </Grid>
+              this.state.userData ? <MountainContainer mountains={this.state.userData.mountains}/> : null
             )} />
 
           </Switch>

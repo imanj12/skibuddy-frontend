@@ -5,7 +5,17 @@ import {Segment, Grid} from 'semantic-ui-react'
 
 const MountainContainer = (props) => {
    return (
-      props.mountains ? props.mountains.map((mtn, i) => <Grid.Column key={i}><Segment basic ><MountainCard mountain={mtn} /></Segment></Grid.Column>) : null
+      <Grid columns={5} stackable centered>
+         <Grid.Row>
+            {props.mountains.map((mtn, i) => (
+               <Grid.Column key={i}>
+                  <Segment basic >
+                     <MountainCard mountain={mtn} />
+                  </Segment>
+               </Grid.Column>
+            ))}
+         </Grid.Row>
+      </Grid>
    )
 }
 

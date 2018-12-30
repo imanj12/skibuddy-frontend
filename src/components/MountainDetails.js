@@ -60,7 +60,7 @@ class MountainDetails extends Component {
       .then(res => res.json())
       .then(data => {
          this.setState({
-            weather: data
+            weather: {currently: data.currently, daily: data.daily}
          }, () => this.setWeatherData())
       })
    }
@@ -120,30 +120,31 @@ class MountainDetails extends Component {
 
    render() {
       const { mountain } = this.props
-      return (
+      const { weather, forecastChartData } = this.state
+      return weather ? (
          <Fragment>
             <Header as='h2' icon textAlign='center'>
                {/* <Icon name='globe' circular /> */}
-               <Header.Content>{mountain ? mountain.name : null}</Header.Content>
-               <Header.Subheader>{mountain ? mountain.city : null}, {mountain ? mountain.state : null}</Header.Subheader>
+               <Header.Content>{mountain.name}</Header.Content>
+               <Header.Subheader>{mountain.city}, {mountain.state}</Header.Subheader>
             </Header>
             <Grid columns={2} centered stackable>
                <Grid.Row>
                   <Grid.Column>
                      <Segment basic>
                         <Header as='h3' textAlign='center' content='Current Conditions'></Header>
-                        <p className='textalign-center'>{this.state.weather ? this.state.weather.currently.summary : null}</p>
-                        <p className='textalign-center'>{this.state.weather ? `Temp: ${this.state.weather.currently.temperature} F` : null}</p>
-                        <p className='textalign-center'>{this.state.weather ? `Wind Speed: ${this.state.weather.currently.windSpeed} mph || Gusts: ${this.state.weather.currently.windGust} mph` : null} </p>
+                        <p className='textalign-center'>{weather.currently.summary}</p>
+                        <p className='textalign-center'>{`Temp: ${weather.currently.temperature} F`}</p>
+                        <p className='textalign-center'>{`Wind Speed: ${weather.currently.windSpeed} mph || Gusts: ${weather.currently.windGust} mph`} </p>
                      </Segment>
                   </Grid.Column>
                   <Grid.Column>
                      <Segment basic>
                         <Header as='h3' textAlign='center' content='Forecast'></Header>
                         <p className='textalign-center'><strong>Summary</strong></p>
-                        <p className='textalign-center'>{this.state.weather ? this.state.weather.daily.summary : null}</p>
+                        <p className='textalign-center'>{weather.daily.summary}</p>
                         <ResponsiveContainer width='100%' height={400}>
-                           <ComposedChart data={this.state.forecastChartData ? this.state.forecastChartData : null} margin={{top: 20, right: 20, bottom: 20, left: 20}}>
+                           <ComposedChart data={forecastChartData} margin={{top: 20, right: 20, bottom: 20, left: 20}}>
                               <CartesianGrid stroke='#f5f5f5'/>
                               <XAxis dataKey="name"/>
                               <YAxis yAxisId='left' label={{ value: 'F', angle: 0, position: 'insideLeft'}}/>
@@ -162,7 +163,7 @@ class MountainDetails extends Component {
                   <Grid.Column>
                      <Segment basic>
                         <Header as ='h3' textAlign='center' content='Interactive Trail Map'></Header>
-                        <iframe title={mountain? mountain.name : null} src={`https://openskimap.org/#12/${this.state.lat}/${this.state.lon}`} height="400" width="100%" frameBorder="0"></iframe>
+                        <iframe title={mountain.name} src={`https://openskimap.org/#12/${this.state.lat}/${this.state.lon}`} height="400" width="100%" frameBorder="0"></iframe>
                      </Segment>
                   </Grid.Column>
                   <Grid.Column>
@@ -174,7 +175,7 @@ class MountainDetails extends Component {
                <Grid.Row>
                   <Grid.Column>
                      <Segment basic>
-                        {mountain && <Button fluid content='Edit' color='blue' as={Link} to={`/mountains/${mountain.id}/edit`}/>}
+                        <Button fluid content='Edit' color='blue' as={Link} to={`/mountains/${mountain.id}/edit`}/>
                      </Segment>
                   </Grid.Column>
                   <Grid.Column>
@@ -185,7 +186,7 @@ class MountainDetails extends Component {
                </Grid.Row>
             </Grid>
          </Fragment>
-      )
+      ) : null
    }
 }
 
