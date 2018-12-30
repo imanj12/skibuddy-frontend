@@ -50,7 +50,6 @@ class NavBar extends Component {
            </Menu.Item>
            <Menu.Item
              name='logout'
-             active={activeItem === 'logout'}
              onClick={this.handleItemClick}
            />
          </Menu.Menu>

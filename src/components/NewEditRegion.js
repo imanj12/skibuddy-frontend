@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Form, Header, Button, Grid} from 'semantic-ui-react'
 import {withRouter} from 'react-router-dom'
+const Cookies = require('cookies-js')
 
 class NewEditRegion extends Component {
    state = {
@@ -18,10 +19,12 @@ class NewEditRegion extends Component {
          user_id: this.props.userId
       }
       const url = 'http://localhost:3000/regions'
+      const token = Cookies.get('token')
       fetch(url, {
          method: 'POST',
          headers: {
-            "Content-Type":"application/json"
+            "Content-Type":"application/json",
+            "Authorization": `Bearer ${token}`
          },
          body: JSON.stringify(data)
       })

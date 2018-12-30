@@ -3,6 +3,7 @@ import { Header, Grid, Segment, Button } from 'semantic-ui-react'
 import {ResponsiveContainer, ComposedChart, Line, Area, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'recharts'
 import * as moment from 'moment'
 import {Link, withRouter} from 'react-router-dom'
+const Cookies = require('cookies-js')
 
 class MountainDetails extends Component {
    constructor() {
@@ -28,7 +29,14 @@ class MountainDetails extends Component {
    // starts a chain of function calls that each depend on new state
    getLatLons = () => {
       let url = `http://localhost:3000/geocode/${this.props.mountain.name}%20ski%20${this.props.mountain.state}`
-      fetch(url)
+      const token = Cookies.get('token')
+      fetch(url, {
+         method: 'GET',
+         headers: {
+            "Content-Type":"application/json",
+            "Authorization": `Bearer ${token}`
+         }
+      })
       .then(res => res.json())
       .then(data => {
          this.setState({
@@ -41,7 +49,14 @@ class MountainDetails extends Component {
    // invoked inside getLatLons after set state
    getWeather = () => {
       let url = `http://localhost:3000/weather/forecast/${this.state.lat}/${this.state.lon}`
-      fetch(url)
+      const token = Cookies.get('token')
+      fetch(url, {
+         method: 'GET',
+         headers: {
+            "Content-Type":"application/json",
+            "Authorization": `Bearer ${token}`
+         }
+      })
       .then(res => res.json())
       .then(data => {
          this.setState({
@@ -91,10 +106,12 @@ class MountainDetails extends Component {
    
    delete = (event) => {
       let url = `http://localhost:3000/mountains/${this.props.mountain.id}`
+      const token = Cookies.get('token')
       fetch(url, {
          method: 'DELETE',
          headers: {
-
+            "Content-Type":"application/json",
+            "Authorization": `Bearer ${token}`
          }
       })
       .then(() => this.props.userFetch())
@@ -103,9 +120,6 @@ class MountainDetails extends Component {
 
    render() {
       const { mountain } = this.props
-      // if (this.state.weather) {
-      //    let { currently, daily } = this.state.weather
-      // }
       return (
          <Fragment>
             <Header as='h2' icon textAlign='center'>
@@ -160,7 +174,7 @@ class MountainDetails extends Component {
                <Grid.Row>
                   <Grid.Column>
                      <Segment basic>
-                        <Button fluid content='Edit' color='blue' as={Link} to={`/mountains/${mountain.id}/edit`}/>
+                        {mountain && <Button fluid content='Edit' color='blue' as={Link} to={`/mountains/${mountain.id}/edit`}/>}
                      </Segment>
                   </Grid.Column>
                   <Grid.Column>

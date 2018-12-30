@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Form, Header, Button, Grid} from 'semantic-ui-react'
 import {withRouter} from 'react-router-dom'
+const Cookies = require('cookies-js')
 
 class NewEdit extends Component {
    constructor(props) {
@@ -14,7 +15,6 @@ class NewEdit extends Component {
             url: this.props.mountain.url,
             region_id: this.props.mountain.region_id,
             user_id: this.props.mountain.user_id,
-            regions: []
          }
       } else {
          this.state = {
@@ -25,17 +25,13 @@ class NewEdit extends Component {
             url: '',
             region_id: null,
             user_id: '',
-            regions: []
          }
       }
    }
    
-   
-
-   // populate select box options in right format
+   // populate select box options with all 50 states in right format
+   // [{ key: 'af', value: 'af', text: 'Afghanistan' }, ...{}]
    getStates = () => {
-      // semantic UI select options in this format:
-      // [{ key: 'af', value: 'af', text: 'Afghanistan' }, ...{}]
       let usaStates = require('usa-states').UsaStates
       let usStates = new usaStates().states
       let states = []
@@ -45,7 +41,8 @@ class NewEdit extends Component {
       return states
    }
    
-   // populate select box options in right format
+   // populate select box options with available user-created regions in right format
+   // [{ key: 'af', value: 'af', text: 'Afghanistan' }, ...{}]
    getRegions = () => {
       let userRegions = this.props.regions
       let regions = []
@@ -69,7 +66,7 @@ class NewEdit extends Component {
          url: this.state.url,
          user_id: this.props.userId
       }
-      if (this.state.region_id !== null || this.state.region_id !== 0) {
+      if (this.state.region_id !== null) {
          data.region_id = this.state.region_id
       }
       
@@ -81,16 +78,17 @@ class NewEdit extends Component {
          method = 'PUT'
       }
 
+      const token = Cookies.get('token')
       fetch(url, {
          method: method,
          headers: {
-            "Content-Type":"application/json"
+            "Content-Type":"application/json",
+            "Authorization":`Bearer ${token}`
          },
          body: JSON.stringify(data)
       })
       .then(() => this.props.userFetch())
       .then(() => this.props.history.push('/'))
-
    }
 
    handleSubmit = (event) => {

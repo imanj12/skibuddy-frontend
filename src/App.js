@@ -13,6 +13,7 @@ import SignUp from './components/SignUp'
 import {Grid} from 'semantic-ui-react'
 import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom'
 import './style/css/weather-icons.min.css'
+const Cookies = require('cookies-js')
 
 class App extends Component {
   constructor() {
@@ -23,18 +24,26 @@ class App extends Component {
   }
 
   componentDidMount() {
-    // this.userLogin('iman', 'iman')
+    Cookies.get('token') && this.userFetch()
   }
 
   setUser = (user) => {
     this.setState({ userData: user })
   }
 
-  // fetch data of specific user - deprecated possibly
+  // fetch data of specific user if already logged in
   userFetch = () => {
-    fetch('http://localhost:3000/users/1')
+    const token = Cookies.get('token')
+    const url = 'http://localhost:3000/profile'
+    fetch(url, {
+      method: 'GET',
+      headers: {
+        "Content-Type":"application/json",
+        "Authorization":`Bearer ${token}` 
+      }
+    })
       .then(res => res.json())
-      .then(userData => this.setState({userData: userData}))
+      .then(data => this.setState({userData: data.user}))
   }
 
   render() {
@@ -96,13 +105,13 @@ class App extends Component {
 
             <Route path='/mountains/:id' render={(props) => {
               let mtnId = props.match.params.id
-              return <MountainDetails mountain={this.state.userData ? this.state.userData.mountains.find(mtn => mtn.id == mtnId) : null} userFetch={this.userFetch}/>
+              return this.state.userData ? <MountainDetails mountain={this.state.userData.mountains.find(mtn => mtn.id == mtnId)} userFetch={this.userFetch}/> : null
             }} />
             
             <Route path='/mountains' render={() => (
               <Grid columns={5} stackable centered>
                 <Grid.Row>
-                  <MountainContainer mountains={this.state.userData ? this.state.userData.mountains : null}/>
+                  {this.state.userData ? <MountainContainer mountains={this.state.userData.mountains}/> : null}
                 </Grid.Row>
               </Grid>
             )} />
