@@ -44,7 +44,7 @@ class SignUp extends Component {
                   <Form.Input label='Street' placeholder='Street Address' />
                   <Form.Group widths='equal'>
                      <Form.Input required label ='City' placeholder='City'/>
-                     <Form.Select required search name='state' label='State' value={this.state.state} placeholder='e.g. CA' options={this.getStates()} onChange={this.handleChange} />
+                     <Form.Select required search name='state' label='State' value={this.state.state} placeholder='Select one' options={this.getStates()} onChange={this.handleChange} />
                   </Form.Group>
                   <Button type='submit' color='blue'>Submit</Button>
                </Form>

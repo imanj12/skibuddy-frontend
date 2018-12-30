@@ -107,7 +107,7 @@ class NewEdit extends Component {
                   <Form.Input required name='name' value={this.state.name} label='Resort Name' placeholder='e.g. Heavenly' onChange={this.handleChange} />
                   <Form.Group>
                      <Form.Input required name='city' value={this.state.city} label='City' placeholder='e.g. South Lake Tahoe' onChange={this.handleChange} />
-                     <Form.Select required search name='state' label='State' value={this.state.state} placeholder='e.g. CA' options={this.getStates()} onChange={this.handleChange} />
+                     <Form.Select required search name='state' label='State' value={this.state.state} placeholder='Select one' options={this.getStates()} onChange={this.handleChange} />
                   </Form.Group>
                   <Form.Input name='trailmap' value={this.state.trailmap} label='Trailmap URL' placeholder='Must be of .jpg file type' onChange={this.handleChange}/>
                   <Form.Input name='url' value={this.state.url} label='Resort URL' placeholder='This is just a convenience...' onChange={this.handleChange}/>
