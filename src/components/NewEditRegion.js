@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Form, Header, Button} from 'semantic-ui-react'
+import {Form, Header, Button, Grid} from 'semantic-ui-react'
 import {withRouter} from 'react-router-dom'
 
 class NewEditRegion extends Component {
@@ -31,11 +31,15 @@ class NewEditRegion extends Component {
 
    render() {
       return (
-         <Form onSubmit={this.handleSubmit}>
-            <Header as='h3' content='Create a Region' />
-            <Form.Input name='name' value={this.state.name} label='Region Name' placeholder='e.g. Denver Area' onChange={this.handleChange}/>
-            <Button color='blue' type='submit'>Submit</Button>
-         </Form>      
+         <Grid columns={1} stackable centered>
+            <Grid.Row>
+               <Form onSubmit={this.handleSubmit}>
+                  <Header as='h3' content='Create a Region' />
+                  <Form.Input name='name' value={this.state.name} label='Region Name' placeholder='e.g. Denver Area' onChange={this.handleChange}/>
+                  <Button color='blue' type='submit'>Submit</Button>
+               </Form> 
+            </Grid.Row>  
+         </Grid>   
       )
    }
 }

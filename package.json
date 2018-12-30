@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "classnames": "^2.2.5",
+    "cookies-js": "^1.2.3",
     "moment": "^2.23.0",
     "primeicons": "^1.0.0",
     "primereact": "^2.0.1",

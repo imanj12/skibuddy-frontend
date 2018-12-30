@@ -1,11 +1,18 @@
 import React, { Component } from 'react'
 import { Input, Menu } from 'semantic-ui-react'
-import {Link} from 'react-router-dom'
+import {Link, withRouter} from 'react-router-dom'
+const Cookies = require('cookies-js')
 
-export default class NavBar extends Component {
+class NavBar extends Component {
    state = { activeItem: 'home' }
  
-   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+   handleItemClick = (e, { name }) => {
+     this.setState({ activeItem: name })
+     if (name === 'logout') {
+       Cookies.expire('token')
+       this.props.history.push('/')
+     }
+   }
  
    render() {
      const { activeItem } = this.state
@@ -51,3 +58,5 @@ export default class NavBar extends Component {
      )
    }
  }
+
+ export default withRouter(NavBar)

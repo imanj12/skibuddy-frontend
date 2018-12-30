@@ -9,8 +9,9 @@ import MountainDetails from './components/MountainDetails'
 import NewEdit from './components/NewEdit'
 import NewEditRegion from './components/NewEditRegion'
 import Login from './components/Login'
+import SignUp from './components/SignUp'
 import {Grid} from 'semantic-ui-react'
-import {BrowserRouter, Route, Switch} from 'react-router-dom'
+import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom'
 import './style/css/weather-icons.min.css'
 
 class App extends Component {
@@ -25,19 +26,8 @@ class App extends Component {
     // this.userLogin('iman', 'iman')
   }
 
-  // login function
-  userLogin = (username, password) => {
-    let url = 'http://localhost:3000/login'
-    let data = { user: { username: username, password: password } }
-    fetch(url, {
-      method: 'POST',
-      headers: {
-        "Content-Type":"application/json"
-      },
-      body: JSON.stringify(data)
-    })
-      .then(r => r.json())
-      .then(data => this.setState({userData: data.user}))
+  setUser = (user) => {
+    this.setState({ userData: user })
   }
 
   // fetch data of specific user - deprecated possibly
@@ -47,23 +37,21 @@ class App extends Component {
       .then(userData => this.setState({userData: userData}))
   }
 
-  handleLoginSubmit = (event, data) => {
-    let username = event.target.username.value
-    let password = event.target.password.value
-    this.userLogin(username, password)
-  }
-
   render() {
     return (
       <BrowserRouter>
         <Fragment>
           <NavBar />
           <Switch>
+            <Route exact path='/' render={() => <Redirect to='/login'/>} />
+
             <Route path='/login' render={() => (
-              <Login handleLoginSubmit={this.handleLoginSubmit}/>
+              <Login userData={this.state.userData} setUser={this.setUser}/>
             )} />
+
+            <Route path='/signup' render={() => <SignUp />} />
             
-            <Route exact path='/' render={() => (
+            <Route path='/home' render={() => (
               <Grid columns={5} stackable centered>
                 <Grid.Row>
                   <RegionContainer regions={this.state.userData ? this.state.userData.regions : null}/>
@@ -75,11 +63,7 @@ class App extends Component {
             )} /> 
 
             <Route path='/regions/new' render={() => (
-              <Grid columns={1} stackable centered>
-                <Grid.Row>
-                  <NewEditRegion userId={this.state.userData ? this.state.userData.id : null} userFetch={this.userFetch}/>
-                </Grid.Row>
-              </Grid>
+              <NewEditRegion userId={this.state.userData ? this.state.userData.id : null} userFetch={this.userFetch}/>
             )} />
             
             <Route path='/regions/:id' render={(props) => {
@@ -91,7 +75,7 @@ class App extends Component {
                   </Grid.Row>
                 </Grid>
               )
-            }}/>
+            }} />
             
             <Route path='/regions' render={() => (
               <Grid columns={5} stackable centered>
@@ -103,12 +87,12 @@ class App extends Component {
             
             <Route path='/mountains/new' render={() => (
               <NewEdit regions={this.state.userData ? this.state.userData.regions : null} userId={this.state.userData ? this.state.userData.id : null} userFetch={this.userFetch}/>
-            )}/>
+            )} />
 
             <Route path='/mountains/:id/edit' render={(props) => {
               let chosenMtn = this.state.userData.mountains.find(mtn => mtn.id == props.match.params.id)
               return <NewEdit regions={this.state.userData ? this.state.userData.regions : null} userId={this.state.userData ? this.state.userData.id : null} userFetch={this.userFetch} mountain={chosenMtn}/>
-            }}/>
+            }} />
 
             <Route path='/mountains/:id' render={(props) => {
               let mtnId = props.match.params.id
