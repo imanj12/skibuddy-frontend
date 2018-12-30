@@ -72,11 +72,18 @@ class App extends Component {
             <Route path='/regions/new' render={() => (
               <NewEditRegion userId={this.state.userData ? this.state.userData.id : null} userFetch={this.userFetch}/>
             )} />
+
+            <Route path='/regions/:id/edit' render={(props) => {
+              let rgnId = props.match.params.id
+              return this.state.userData ? (
+                <NewEditRegion region={this.state.userData.regions.find(rgn => rgn.id == rgnId)} userId={this.state.userData.id} userFetch={this.userFetch}/>
+              ) : null
+            }} />
             
             <Route path='/regions/:id' render={(props) => {
               let rgnId = parseInt(props.match.params.id)
               return this.state.userData ? (
-                <MountainContainer mountains={this.state.userData.mountains.filter(mtn => mtn.region_id === rgnId)}/>
+                <MountainContainer mountains={this.state.userData.mountains.filter(mtn => mtn.region_id === rgnId)} region={this.state.userData.regions.find(rgn => rgn.id == rgnId)} userFetch={this.userFetch}/>
               ) : null
             }} />
             

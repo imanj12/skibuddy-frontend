@@ -74,7 +74,7 @@ class NewEdit extends Component {
       let method = 'POST'
 
       if (this.props.mountain) {
-         url = `http://localhost:3000/mountains/${this.props.mountain.id}`
+         url += `/${this.props.mountain.id}`
          method = 'PUT'
       }
 
