@@ -70,13 +70,19 @@ class App extends Component {
             )} />
 
             <Route path='/regions/new' render={() => (
-              <NewEditRegion userId={this.state.userData ? this.state.userData.id : null} userFetch={this.userFetch}/>
-            )} />
+              this.state.userData ? (
+                <NewEditRegion 
+                  userId={this.state.userData.id} 
+                  userFetch={this.userFetch}
+                  allMtns={this.state.userData.mountains}
+                />
+              ) : null
+            )}/>
 
             <Route path='/regions/:id/edit' render={(props) => {
               let rgnId = props.match.params.id
               return this.state.userData ? (
-                <NewEditRegion region={this.state.userData.regions.find(rgn => rgn.id == rgnId)} userId={this.state.userData.id} userFetch={this.userFetch}/>
+                <NewEditRegion region={this.state.userData.regions.find(rgn => rgn.id == rgnId)} userId={this.state.userData.id} userFetch={this.userFetch} allMtns={this.state.userData.mountains}/>
               ) : null
             }} />
             

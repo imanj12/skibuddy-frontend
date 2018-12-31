@@ -6,6 +6,26 @@ const Cookies = require('cookies-js')
 
 class MountainContainer extends Component {
 
+   unassignMtns = () => {
+      let mtns = this.props.mountains
+      const token = Cookies.get('token')
+      console.log(mtns)
+      for(let i=0;i<mtns.length;i++) {
+         let data = { region_id: null }
+         console.log(mtns[i])
+         const url = `http://localhost:3000/mountains/${mtns[i].id}`
+         fetch(url, {
+            method: 'PATCH',
+            headers: {
+               "Content-Type":"application/json",
+               Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify(data)
+         })
+         .then(() => this.props.userFetch())
+      }
+   }
+   
    deleteRegion = (event) => {
       const url = `http://localhost:3000/regions/${this.props.region.id}`
       const token = Cookies.get('token')
@@ -16,7 +36,7 @@ class MountainContainer extends Component {
             "Authorization": `Bearer ${token}`
          }
       })
-      .then(() => this.props.userFetch())
+      .then(() => this.unassignMtns())
       .then(() => this.props.history.push('/'))
    }
 
