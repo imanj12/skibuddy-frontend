@@ -100,7 +100,6 @@ class NewEditRegion extends Component {
                      label={this.props.region ? 'Edit Name' : 'Region Name'} 
                      placeholder='e.g. Denver Area'
                      onChange={this.handleChange}/>
-                  {this.props.region ? (
                      <Fragment>
                         <Header as='h4' content='Assign free mountain(s) to region' />
                         <Dropdown fluid multiple search selection
@@ -110,7 +109,6 @@ class NewEditRegion extends Component {
                            onChange={this.handleChange}
                         />
                      </Fragment>
-                  ) : null}
                   <Button color='blue' type='submit'>Submit</Button>
                </Form> 
             </Grid.Row>
