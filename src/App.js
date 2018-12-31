@@ -10,7 +10,6 @@ import NewEdit from './components/NewEdit'
 import NewEditRegion from './components/NewEditRegion'
 import Login from './components/Login'
 import SignUp from './components/SignUp'
-import {Grid} from 'semantic-ui-react'
 import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom'
 import './style/css/weather-icons.min.css'
 const Cookies = require('cookies-js')

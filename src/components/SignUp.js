@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Form, Button, Grid, Header} from 'semantic-ui-react'
+import {Form, Button, Grid, Header, Message} from 'semantic-ui-react'
 
 class SignUp extends Component {
    state = {
@@ -8,7 +8,8 @@ class SignUp extends Component {
       rePassword: '',
       address: '',
       city: '',
-      state: ''
+      state: '',
+      errors: null
    }
 
    handleChange = (event, data) => {
@@ -29,8 +30,6 @@ class SignUp extends Component {
          city: this.state.city,
          state: this.state.state
       }}
-
-      console.log(data)
       
       let url = 'http://localhost:3000/users'
       let method = 'POST'
@@ -45,7 +44,8 @@ class SignUp extends Component {
          .then(r => r.json())
          .then(data => {
             if (data.errors) {
-               
+               console.log(data.errors)
+               this.setState({errors: data.errors})
             }
          })
    }
@@ -70,7 +70,13 @@ class SignUp extends Component {
                {/* <Image src='/logo.png' />  */}
                Create an account
                </Header>
-               <Form onSubmit={this.handleSubmit} >
+               <Form error onSubmit={this.handleSubmit} >
+               {this.state.errors ? (
+                  <Message
+                     error
+                     header='Error'
+                     content={this.state.errors.username[0]}
+                  />) : null}
                   <Form.Input required name='username' label='Username' placeholder='Username' onChange={this.handleChange} />
                   <Form.Group widths='equal'>
                      <Form.Input required name='password' label='Password' placeholder='Password' type='password' onChange={this.handleChange} />
