@@ -13,8 +13,7 @@ class NewEdit extends Component {
             state: this.props.mountain.state,
             trailmap: this.props.mountain.trailmap,
             url: this.props.mountain.url,
-            region_id: this.props.mountain.region_id,
-            user_id: this.props.mountain.user_id,
+            region_id: this.props.mountain.region_id
          }
       } else {
          this.state = {
@@ -23,8 +22,7 @@ class NewEdit extends Component {
             state: '',
             trailmap: '',
             url: '',
-            region_id: null,
-            user_id: '',
+            region_id: null
          }
       }
    }
@@ -64,12 +62,13 @@ class NewEdit extends Component {
          state: this.state.state,
          trailmap: this.state.trailmap,
          url: this.state.url,
-         user_id: this.props.userId
+         user_id: this.props.userId,
+         region_id: this.state.region_Id
       }
-      if (this.state.region_id !== null) {
-         data.region_id = this.state.region_id
+      if (this.state.region_id === 0) {
+         data.region_id = null
       }
-      
+
       let url = 'http://localhost:3000/mountains'
       let method = 'POST'
 
@@ -112,7 +111,7 @@ class NewEdit extends Component {
                   
                   <Header as='h2' content='Attach to a Region (optional)'/>
                   <Header as='h3' content='Pick existing region'/>
-                  <Form.Select search name='region_id' value={this.state.region_id || 0} label='Region Name' options={this.props.regions ? this.getRegions() : null} onChange={this.handleChange}/>
+                  <Form.Select search name='region_id' value={this.state.region_id} label='Region Name' options={this.props.regions ? this.getRegions() : null} onChange={this.handleChange}/>
                   <Button color='blue' type='submit'>Submit</Button>
                </Form>
             </Grid.Row>
