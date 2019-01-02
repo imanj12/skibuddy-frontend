@@ -6,7 +6,7 @@ const RegionCard = (props) => {
 	const { region } = props
 	return (
 		<Fragment>
-			<Card className='textalign-center' as={Link} to={`/regions/${region.id}`}>
+			<Card className='textalign-center' as={Link} to={`/regions/${region.id}`} color='blue'>
 				<Image src='https://www.worldatlas.com/r/w728-h425-c728x425/upload/44/5d/77/shutterstock-519106648.jpg' />
 				<Card.Content>
 					<Card.Header>{region.name}</Card.Header>

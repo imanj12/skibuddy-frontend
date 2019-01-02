@@ -4,13 +4,13 @@ import { Menu, Search } from 'semantic-ui-react'
 import {Link, withRouter} from 'react-router-dom'
 import logo from '../style/images/logo.png'
 const Cookies = require('cookies-js')
-
 let searchResults = []
+
 class NavBar extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      activeItem: 'home' ,
+      activeItem: '',
       isLoading: false,
       value: '',
       results: []
@@ -26,6 +26,7 @@ class NavBar extends Component {
   }
 
   createSearchResults = () => {
+    searchResults = []
     this.props.userData.regions.forEach(region => searchResults.push( {title: region.name, description: 'Region', id: region.id} ))
     this.props.userData.mountains.forEach(mountain => searchResults.push( {title: mountain.name, description: 'Mountain', id: mountain.id} ))
   }
@@ -36,6 +37,8 @@ class NavBar extends Component {
       Cookies.expire('token')
       this.props.setUser(null)
       this.props.history.push('/')
+    } else if (name === 'logo') {
+      this.setState({activeItem: ''})
     }
   }
 
@@ -71,7 +74,7 @@ class NavBar extends Component {
 
     return (
       <Menu secondary color='blue' inverted>
-        <Menu.Item as={Link} to='/' >
+        <Menu.Item as={Link} to='/' name ='logo' onClick={this.handleItemClick}>
           <img alt='' src={logo}></img><strong>SkiBuddy</strong>
         </Menu.Item>
         <Menu.Item as={Link} to='/regions'

@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react';
 import 'semantic-ui-css/semantic.min.css'
-// import logo from './logo.svg';
 import './App.css';
 import NavBar from './components/NavBar'
 import RegionContainer from './containers/RegionContainer'
@@ -12,6 +11,8 @@ import Login from './components/Login'
 import SignUp from './components/SignUp'
 import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom'
 import './style/css/weather-icons.min.css'
+import './style/css/animations.css'
+import {Sticky} from 'semantic-ui-react'
 const Cookies = require('cookies-js')
 
 class App extends Component {
@@ -50,78 +51,84 @@ class App extends Component {
     return (
       <BrowserRouter>
         <Fragment>
-          {userData ? <NavBar userData={userData} setUser={this.setUser}/> : null}
-          <Switch>
-            <Route exact path='/' render={() => <Redirect to='/login'/>} />
+          {userData ? (
+            <Sticky>
+              <NavBar userData={userData} setUser={this.setUser}/>
+            </Sticky>
+            ) : null}
+          <div className='padded-sides'>
+            <Switch>
+              <Route exact path='/' render={() => <Redirect to='/login'/>} />
 
-            <Route path='/login' render={() => (
-              <Login setUser={this.setUser} setBackground={this.setBackground} clearBackground={this.clearBackground}/>
-            )} />
+              <Route path='/login' render={() => (
+                <Login setUser={this.setUser} setBackground={this.setBackground} clearBackground={this.clearBackground}/>
+              )} />
 
-            <Route path='/signup' render={() => <SignUp />} />
-            
-            <Route path='/home' render={() => (
-              userData ? ( 
-                <Fragment>
-                  <RegionContainer regions={userData.regions}/>
-                  <MountainContainer mountains={userData.mountains}/>
-                </Fragment> 
-              ) : null
-            )} />
+              <Route path='/signup' render={() => <SignUp />} />
+              
+              <Route path='/home' render={() => (
+                userData ? ( 
+                  <Fragment>
+                    <RegionContainer regions={userData.regions}/>
+                    <MountainContainer mountains={userData.mountains}/>
+                  </Fragment> 
+                ) : null
+              )} />
 
-            <Route path='/regions/new' render={() => (
-              userData ? (
-                <NewEditRegion 
-                  userId={userData.id} 
-                  userFetch={this.userFetch}
-                  allMtns={userData.mountains}
-                />
-              ) : null
-            )}/>
+              <Route path='/regions/new' render={() => (
+                userData ? (
+                  <NewEditRegion 
+                    userId={userData.id} 
+                    userFetch={this.userFetch}
+                    allMtns={userData.mountains}
+                  />
+                ) : null
+              )}/>
 
-            <Route path='/regions/:id/edit' render={(props) => {
-              let rgnId = props.match.params.id
-              return userData ? (
-                <NewEditRegion region={userData.regions.find(rgn => rgn.id == rgnId)} userId={userData.id} userFetch={this.userFetch} allMtns={userData.mountains}/>
-              ) : null
-            }} />
-            
-            <Route path='/regions/:id' render={(props) => {
-              let rgnId = parseInt(props.match.params.id)
-              return userData ? (
-                <MountainContainer mountains={userData.mountains.filter(mtn => mtn.region_id === rgnId)} region={userData.regions.find(rgn => rgn.id == rgnId)} userFetch={this.userFetch}/>
-              ) : null
-            }} />
-            
-            <Route path='/regions' render={() => (
-              userData ? <RegionContainer regions={userData.regions}/> : null
-            )} />
-            
-            <Route path='/mountains/new' render={() => (
-              userData ? (
-                <NewEdit regions={userData.regions} userId={userData.id} userFetch={this.userFetch}/>
-              ) : null
-            )} />
+              <Route path='/regions/:id/edit' render={(props) => {
+                let rgnId = props.match.params.id
+                return userData ? (
+                  <NewEditRegion region={userData.regions.find(rgn => rgn.id == rgnId)} userId={userData.id} userFetch={this.userFetch} allMtns={userData.mountains}/>
+                ) : null
+              }} />
+              
+              <Route path='/regions/:id' render={(props) => {
+                let rgnId = parseInt(props.match.params.id)
+                return userData ? (
+                  <MountainContainer mountains={userData.mountains.filter(mtn => mtn.region_id === rgnId)} region={userData.regions.find(rgn => rgn.id == rgnId)} userFetch={this.userFetch}/>
+                ) : null
+              }} />
+              
+              <Route path='/regions' render={() => (
+                userData ? <RegionContainer regions={userData.regions}/> : null
+              )} />
+              
+              <Route path='/mountains/new' render={() => (
+                userData ? (
+                  <NewEdit regions={userData.regions} userId={userData.id} userFetch={this.userFetch}/>
+                ) : null
+              )} />
 
-            <Route path='/mountains/:id/edit' render={(props) => {
-              let mtnId = props.match.params.id
-              return userData ? (
-                <NewEdit regions={userData.regions} userId={userData.id} userFetch={this.userFetch} mountain={userData.mountains.find(mtn => mtn.id == mtnId)}/>
-              ) : null
-            }} />
+              <Route path='/mountains/:id/edit' render={(props) => {
+                let mtnId = props.match.params.id
+                return userData ? (
+                  <NewEdit regions={userData.regions} userId={userData.id} userFetch={this.userFetch} mountain={userData.mountains.find(mtn => mtn.id == mtnId)}/>
+                ) : null
+              }} />
 
-            <Route path='/mountains/:id' render={(props) => {
-              let mtnId = props.match.params.id
-              return userData ? (
-                <MountainDetails mountain={userData.mountains.find(mtn => mtn.id == mtnId)} userFetch={this.userFetch} userData={userData}/>
-              ) : null
-            }} />
-            
-            <Route path='/mountains' render={() => (
-              userData ? <MountainContainer mountains={userData.mountains}/> : null
-            )} />
+              <Route path='/mountains/:id' render={(props) => {
+                let mtnId = props.match.params.id
+                return userData ? (
+                  <MountainDetails mountain={userData.mountains.find(mtn => mtn.id == mtnId)} userFetch={this.userFetch} userData={userData}/>
+                ) : null
+              }} />
+              
+              <Route path='/mountains' render={() => (
+                userData ? <MountainContainer mountains={userData.mountains}/> : null
+              )} />
 
-          </Switch>
+            </Switch>
+          </div>
         </Fragment>
       </BrowserRouter>
     )

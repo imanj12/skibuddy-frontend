@@ -62,7 +62,6 @@ class Login extends Component {
                 placeholder='Password'
                 type='password'
                 />
-
                 <Button color='blue' fluid size='large' type='submit'>
                 Login
                 </Button>

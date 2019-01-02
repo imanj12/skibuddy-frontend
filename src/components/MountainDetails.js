@@ -111,7 +111,6 @@ class MountainDetails extends Component {
    getDriveTime = () => {
       let url = `http://localhost:3000/drivetime/${this.props.userData.address}/${this.props.userData.city}/${this.props.userData.state}/${this.state.lat}/${this.state.lon}`
       const token = Cookies.get('token')
-      console.log(url)
       fetch(url, {
          method: 'GET',
          headers: {
@@ -174,8 +173,7 @@ class MountainDetails extends Component {
                <Grid.Row>
                   <Grid.Column>
                      <Segment basic textAlign='center'>
-                        <Header as='h2' textAlign='center' content='Current Conditions' color='teal'></Header>
-                        {console.log(weather.currently.icon)}
+                        <Header as='h2' textAlign='center' content='Current Conditions' color='blue'></Header>
                         <i className={`wi wi-${weather.currently.icon}`}></i>
                         <h3 className='textalign-center'>
                            <strong>{`${weather.currently.temperature} ºF`} - {weather.currently.summary}</strong>
@@ -188,7 +186,7 @@ class MountainDetails extends Component {
                   </Grid.Column>
                   <Grid.Column>
                      <Segment basic>
-                        <Header as='h2' textAlign='center' content='Forecast' color='teal'></Header>
+                        <Header as='h2' textAlign='center' content='Forecast' color='blue'></Header>
                         <p className='textalign-center'><strong>Summary</strong></p>
                         <p className='textalign-center'>{weather.daily.summary}</p>
                         <ResponsiveContainer width='100%' height={400}>
@@ -210,7 +208,7 @@ class MountainDetails extends Component {
                <Grid.Row>
                   <Grid.Column>
                      <Segment basic>
-                        <Header as ='h2' textAlign='center' content='Interactive Trail Map' color='teal'></Header>
+                        <Header as ='h2' textAlign='center' content='Interactive Trail Map' color='blue'></Header>
                         <iframe title={mountain.name} src={`https://openskimap.org/#12/${this.state.lat}/${this.state.lon}`} height="400" width="100%" frameBorder="0"></iframe>
                      </Segment>
                   </Grid.Column>

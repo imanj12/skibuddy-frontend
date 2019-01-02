@@ -50,3 +50,9 @@ body {
 .padded-top-small {
   padding-top: 2%;
 }
+
+.padded-sides {
+  --padding: 5%;
+  padding-left: var(--padding);
+  padding-right: var(--padding);
+}

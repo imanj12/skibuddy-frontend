@@ -6,7 +6,7 @@ const MountainCard = (props) => {
    const { mountain } = props
    return (
       <Fragment>
-         <Card className ='textalign-center' as={Link} to={`/mountains/${mountain.id}`}>
+         <Card className ='textalign-center' as={Link} to={`/mountains/${mountain.id}`} color ='teal'>
             <Image src='https://www.worldatlas.com/r/w728-h425-c728x425/upload/44/5d/77/shutterstock-519106648.jpg' />
             <Card.Content>
                <Card.Header>{mountain.name}</Card.Header>
