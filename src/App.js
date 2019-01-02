@@ -55,7 +55,7 @@ class App extends Component {
             <Route exact path='/' render={() => <Redirect to='/login'/>} />
 
             <Route path='/login' render={() => (
-              <Login setUser={this.setUser}/>
+              <Login setUser={this.setUser} setBackground={this.setBackground} clearBackground={this.clearBackground}/>
             )} />
 
             <Route path='/signup' render={() => <SignUp />} />

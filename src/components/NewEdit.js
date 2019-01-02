@@ -63,8 +63,12 @@ class NewEdit extends Component {
          trailmap: this.state.trailmap,
          url: this.state.url,
          user_id: this.props.userId,
-         region_id: this.state.region_Id
+         region_id: this.state.region_id
       }
+      
+      console.log(data)
+      console.log(this.state.region_id)
+
       if (this.state.region_id === 0) {
          data.region_id = null
       }
@@ -76,7 +80,7 @@ class NewEdit extends Component {
          url += `/${this.props.mountain.id}`
          method = 'PUT'
       }
-
+      console.log(data)
       const token = Cookies.get('token')
       fetch(url, {
          method: method,
@@ -87,35 +91,37 @@ class NewEdit extends Component {
          body: JSON.stringify(data)
       })
       .then(() => this.props.userFetch())
-      .then(() => this.props.history.push('/'))
+      // .then(() => this.props.history.push('/')) ADD THIS BACKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
    }
 
    handleSubmit = (event) => {
-      event.preventDefault()
+      // event.preventDefault()
       this.postMountain()
    }
 
    render() {
       return (
-         <Grid columns={1} stackable centered>
-            <Grid.Row>
-               <Form onSubmit={this.handleSubmit}>
-                  <Header as='h2' content={this.props.mountain ? `Edit ${this.props.mountain.name}` : 'Create a mountain'}/>
-                  <Form.Input required name='name' value={this.state.name} label='Resort Name' placeholder='e.g. Heavenly' onChange={this.handleChange} />
-                  <Form.Group>
-                     <Form.Input required name='city' value={this.state.city} label='City' placeholder='e.g. South Lake Tahoe' onChange={this.handleChange} />
-                     <Form.Select required search name='state' label='State' value={this.state.state} placeholder='Select one' options={this.getStates()} onChange={this.handleChange} />
-                  </Form.Group>
-                  <Form.Input name='trailmap' value={this.state.trailmap} label='Trailmap URL' placeholder='Must be of .jpg file type' onChange={this.handleChange}/>
-                  <Form.Input name='url' value={this.state.url} label='Resort URL' placeholder='This is just a convenience...' onChange={this.handleChange}/>
-                  
-                  <Header as='h2' content='Attach to a Region (optional)'/>
-                  <Header as='h3' content='Pick existing region'/>
-                  <Form.Select search name='region_id' value={this.state.region_id} label='Region Name' options={this.props.regions ? this.getRegions() : null} onChange={this.handleChange}/>
-                  <Button color='blue' type='submit'>Submit</Button>
-               </Form>
-            </Grid.Row>
-         </Grid>
+         <div className='padded-top-small'>
+            <Grid columns={1} stackable centered>
+               <Grid.Row>
+                  <Form onSubmit={this.handleSubmit}>
+                     <Header as='h2' content={this.props.mountain ? `Edit ${this.props.mountain.name}` : 'Create a mountain'}/>
+                     <Form.Input required name='name' value={this.state.name} label='Resort Name' placeholder='e.g. Heavenly' onChange={this.handleChange} />
+                     <Form.Group>
+                        <Form.Input required name='city' value={this.state.city} label='City' placeholder='e.g. South Lake Tahoe' onChange={this.handleChange} />
+                        <Form.Select required search name='state' label='State' value={this.state.state} placeholder='Select one' options={this.getStates()} onChange={this.handleChange} />
+                     </Form.Group>
+                     <Form.Input name='trailmap' value={this.state.trailmap} label='Trailmap URL' placeholder='Must be of .jpg file type' onChange={this.handleChange}/>
+                     <Form.Input name='url' value={this.state.url} label='Resort URL' placeholder='This is just a convenience...' onChange={this.handleChange}/>
+                     
+                     <Header as='h2' content='Attach to a Region (optional)'/>
+                     <Header as='h3' content='Pick existing region'/>
+                     <Form.Select search name='region_id' value={this.state.region_id} label='Region Name' options={this.props.regions ? this.getRegions() : null} onChange={this.handleChange}/>
+                     <Button color='blue' type='submit'>Submit</Button>
+                  </Form>
+               </Grid.Row>
+            </Grid>
+         </div>
       )
    }
 }

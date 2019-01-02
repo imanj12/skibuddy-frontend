@@ -90,29 +90,31 @@ class NewEditRegion extends Component {
 
    render() {
       return (
-         <Grid columns={1} stackable centered>
-            <Grid.Row>
-               <Form onSubmit={this.handleSubmit}>
-                  <Header as='h3' content={this.props.region ? this.props.region.name : 'Create a Region'} />
-                  <Form.Input 
-                     name='name' 
-                     value={this.state.name} 
-                     label={this.props.region ? 'Edit Name' : 'Region Name'} 
-                     placeholder='e.g. Denver Area'
-                     onChange={this.handleChange}/>
-                     <Fragment>
-                        <Header as='h4' content='Assign free mountain(s) to region' />
-                        <Dropdown fluid multiple search selection
-                           name='mtns'
-                           options={this.mtnOptions()}
-                           placeholder={this.mtnOptions().length < 1 ? 'All mountains assigned' : 'Select...'}
-                           onChange={this.handleChange}
-                        />
-                     </Fragment>
-                  <Button color='blue' type='submit'>Submit</Button>
-               </Form> 
-            </Grid.Row>
-         </Grid>   
+         <div className='padded-top-small'>
+            <Grid columns={1} stackable centered>
+               <Grid.Row>
+                  <Form onSubmit={this.handleSubmit}>
+                     <Header as='h3' content={this.props.region ? this.props.region.name : 'Create a Region'} />
+                     <Form.Input 
+                        name='name' 
+                        value={this.state.name} 
+                        label={this.props.region ? 'Edit Name' : 'Region Name'} 
+                        placeholder='e.g. Denver Area'
+                        onChange={this.handleChange}/>
+                        <Fragment>
+                           <Header as='h4' content='Assign free mountain(s) to region' />
+                           <Dropdown fluid multiple search selection
+                              name='mtns'
+                              options={this.mtnOptions()}
+                              placeholder={this.mtnOptions().length < 1 ? 'All mountains assigned' : 'Select...'}
+                              onChange={this.handleChange}
+                           />
+                        </Fragment>
+                     <Button color='blue' type='submit'>Submit</Button>
+                  </Form> 
+               </Grid.Row>
+            </Grid>  
+         </div> 
       )
    }
 }

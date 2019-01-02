@@ -5,6 +5,13 @@ const Cookies = require('cookies-js')
 
 class Login extends Component {
 
+  componentDidMount() {
+    document.body.style.backgroundImage = "url('https://cdn.powder.com/uploads/2017/12/AiguileDeLAmone_HeliSki_%C2%A9www.jeremy-bernard.com-3245.jpg')"  }
+
+  componentWillUnmount() {
+    document.body.style.backgroundImage = ""
+  }
+
    userLogin = (username, password) => {
       const url = 'http://localhost:3000/login'
       let data = { user: { username: username, password: password } }
@@ -35,12 +42,15 @@ class Login extends Component {
 
    render() {
       return Cookies.get('token') ? <Redirect to='/home' /> : (
+        <div className='padded-top-large ski-background'>
         <Grid textAlign='center' verticalAlign='middle'>
           <Grid.Column style={{ maxWidth: 450 }}>
-          <Header as='h2' color='blue' textAlign='center'>
-            {/* <Image src='/logo.png' />  */}
-            Log-in to your account
-          </Header>
+          <Segment>
+            <Header as='h2' color='blue' textAlign='center'>
+              {/* <Image src='/logo.png' />  */}
+              Welcome to SkiBuddy!
+            </Header>
+          </Segment>
           <Form size='large' onSubmit={this.handleLoginSubmit}>
               <Segment stacked>
                 <Form.Input name='username' fluid icon='user' iconPosition='left' placeholder='Username' />
@@ -63,6 +73,7 @@ class Login extends Component {
           </Message>
           </Grid.Column>
         </Grid>
+        </div>
       )
    }
 }

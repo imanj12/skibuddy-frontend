@@ -42,32 +42,34 @@ class MountainContainer extends Component {
 
    render() {
       return (
-         <Grid columns={5} stackable centered>
-            <Header as='h2' content={this.props.region ? this.props.region.name : 'All Mountains'}/>
-            <Grid.Row>
-               {this.props.mountains.map((mtn, i) => (
-                  <Grid.Column key={i}>
-                     <Segment basic >
-                        <MountainCard mountain={mtn} />
-                     </Segment>
-                  </Grid.Column>
-               ))}
-            </Grid.Row>
-            {this.props.region ? (
+         <div className='padded-top-small'>
+            <Grid columns={5} stackable centered>
+               <Header as='h2' content={this.props.region ? this.props.region.name : 'All Mountains'}/>
                <Grid.Row>
-                  <Grid.Column>
-                     <Segment basic textAlign='center'>
-                        <Button fluid content='Edit' color='blue' as={Link} to={`/regions/${this.props.region.id}/edit`}/>
-                     </Segment>
-                  </Grid.Column>
-                  <Grid.Column>
-                     <Segment basic textAlign='center'>
-                        <Button fluid color='red' content='Delete' onClick={this.deleteRegion}/>
-                     </Segment>
-                  </Grid.Column>
+                  {this.props.mountains.map((mtn, i) => (
+                     <Grid.Column key={i}>
+                        <Segment basic >
+                           <MountainCard mountain={mtn} />
+                        </Segment>
+                     </Grid.Column>
+                  ))}
                </Grid.Row>
-            ) : null}
-         </Grid>
+               {this.props.region ? (
+                  <Grid.Row>
+                     <Grid.Column>
+                        <Segment basic textAlign='center'>
+                           <Button fluid content='Edit' color='blue' as={Link} to={`/regions/${this.props.region.id}/edit`}/>
+                        </Segment>
+                     </Grid.Column>
+                     <Grid.Column>
+                        <Segment basic textAlign='center'>
+                           <Button fluid color='red' content='Delete' onClick={this.deleteRegion}/>
+                        </Segment>
+                     </Grid.Column>
+                  </Grid.Row>
+               ) : null}
+            </Grid>
+         </div>
       )
    }
 }
