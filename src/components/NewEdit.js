@@ -90,8 +90,13 @@ class NewEdit extends Component {
          },
          body: JSON.stringify(data)
       })
-      .then(() => this.props.userFetch())
-      .then(() => this.props.history.push('/'))
+      .then(r => r.json())
+      .then(data => {
+         this.props.userFetch()
+         this.props.history.push(`/mountains/${data.id}`)
+      })
+      // .then(() => this.props.userFetch())
+      // .then(() => this.props.history.push('/'))
    }
 
    handleSubmit = (event) => {

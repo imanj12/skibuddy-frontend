@@ -31,6 +31,10 @@
   }
 } */
 
+a {
+  outline: 0;
+}
+
 .textalign-center {
   text-align: center;
 }
@@ -41,6 +45,22 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
+}
+
+.mountain {
+  background: url('./style/icons/noun_Mountains_1579651.png');
+  height: 20px;
+  width: 20px;
+  display: block;
+  /* Other styles here */
+}
+
+.region {
+  background: './style/icons/noun_Earth_965892.png';
+  height: 20px;
+  width: 20px;
+  display: block;
+  /* Other styles here */
 }
 
 .padded-top-large {

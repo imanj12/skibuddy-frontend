@@ -94,7 +94,7 @@ class NewEditRegion extends Component {
             <Grid columns={1} stackable centered>
                <Grid.Row>
                   <Form onSubmit={this.handleSubmit}>
-                     <Header as='h3' content={this.props.region ? this.props.region.name : 'Create a Region'} />
+                     <Header as='h1' content={this.props.region ? this.props.region.name : 'Create a Region'} />
                      <Form.Input 
                         name='name' 
                         value={this.state.name} 

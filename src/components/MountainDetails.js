@@ -163,70 +163,72 @@ class MountainDetails extends Component {
       const { weather, forecastChartData } = this.state
       
       return weather ? (
-         <Fragment>
-            <Header as='h1' icon textAlign='center'>
-               {/* <Icon name='globe' circular /> */}
-               <Header.Content>{mountain.name}</Header.Content>
-               <Header.Subheader>{mountain.city}, {mountain.state}</Header.Subheader>
-            </Header>
-            <Grid columns={2} centered stackable>
-               <Grid.Row>
-                  <Grid.Column>
-                     <Segment basic textAlign='center'>
-                        <Header as='h2' textAlign='center' content='Current Conditions' color='blue'></Header>
-                        <i className={`wi wi-${weather.currently.icon}`}></i>
-                        <h3 className='textalign-center'>
-                           <strong>{`${weather.currently.temperature} ºF`} - {weather.currently.summary}</strong>
-                        </h3>
-                        <h4 className='textalign-center'>{`Wind Speed: ${weather.currently.windSpeed} mph`} </h4>
-                        <h4 className='textalign-center'>{`Gusts: ${weather.currently.windGust} mph`} </h4>
-                        <h4 className='textalign-center'>{`Relative humidity: ${weather.currently.humidity}`} </h4>
-                        <h4 className='textalign-center'>{`Visibility: ${weather.currently.visibility} miles`} </h4>
-                     </Segment>
-                  </Grid.Column>
-                  <Grid.Column>
-                     <Segment basic>
-                        <Header as='h2' textAlign='center' content='Forecast' color='blue'></Header>
-                        <p className='textalign-center'><strong>Summary</strong></p>
-                        <p className='textalign-center'>{weather.daily.summary}</p>
-                        <ResponsiveContainer width='100%' height={400}>
-                           <ComposedChart data={forecastChartData} margin={{top: 20, right: 20, bottom: 20, left: 20}}>
-                              <CartesianGrid stroke='#f5f5f5'/>
-                              <XAxis dataKey="name"/>
-                              <YAxis yAxisId='left' label={{ value: 'F', angle: 0, position: 'insideLeft'}}/>
-                              <YAxis yAxisId='right' orientation='right' label={{ value: 'In.', angle: 0, position: 'insideRight'}}/>
-                              <Tooltip />
-                              <Legend />
-                              <Area yAxisId='right' type='monotone' dataKey='snow' fill='#8884d8' stroke='#8884d8'/>
-                              <Bar yAxisId='left' dataKey='tmp' barSize={20} fill='#413ea0' />
-                              <Line yAxisId='right' type='monotone' dataKey='rain' stroke='#ff7300' />
-                           </ComposedChart>
-                        </ResponsiveContainer>
-                     </Segment>
-                  </Grid.Column>
-               </Grid.Row>
-               <Grid.Row>
-                  <Grid.Column>
-                     <Segment basic>
-                        <Header as ='h2' textAlign='center' content='Interactive Trail Map' color='blue'></Header>
-                        <iframe title={mountain.name} src={`https://openskimap.org/#12/${this.state.lat}/${this.state.lon}`} height="400" width="100%" frameBorder="0"></iframe>
-                     </Segment>
-                  </Grid.Column>
-               </Grid.Row>
-               <Grid.Row>
-                  <Grid.Column>
-                     <Segment basic>
-                        <Button fluid content='Edit' color='blue' as={Link} to={`/mountains/${mountain.id}/edit`}/>
-                     </Segment>
-                  </Grid.Column>
-                  <Grid.Column>
-                     <Segment basic>
-                        <Button fluid content='Delete' color='red' onClick={this.delete}/>
-                     </Segment>
-                  </Grid.Column>
-               </Grid.Row>
-            </Grid>
-         </Fragment>
+         <div className='padded-top-small'>
+            <Fragment>
+               <Header as='h1' icon textAlign='center'>
+                  {/* <Icon name='globe' circular /> */}
+                  <Header.Content>{mountain.name}</Header.Content>
+                  <Header.Subheader>{mountain.city}, {mountain.state}</Header.Subheader>
+               </Header>
+               <Grid columns={2} centered stackable>
+                  <Grid.Row>
+                     <Grid.Column>
+                        <Segment basic textAlign='center'>
+                           <Header as='h2' textAlign='center' content='Current Conditions' color='blue'></Header>
+                           <i className={`wi wi-${weather.currently.icon}`}></i>
+                           <h3 className='textalign-center'>
+                              <strong>{`${weather.currently.temperature} ºF`} - {weather.currently.summary}</strong>
+                           </h3>
+                           <h4 className='textalign-center'>{`Wind Speed: ${weather.currently.windSpeed} mph`} </h4>
+                           <h4 className='textalign-center'>{`Gusts: ${weather.currently.windGust} mph`} </h4>
+                           <h4 className='textalign-center'>{`Relative humidity: ${weather.currently.humidity}`} </h4>
+                           <h4 className='textalign-center'>{`Visibility: ${weather.currently.visibility} miles`} </h4>
+                        </Segment>
+                     </Grid.Column>
+                     <Grid.Column>
+                        <Segment basic>
+                           <Header as='h2' textAlign='center' content='Forecast' color='blue'></Header>
+                           <p className='textalign-center'><strong>Summary</strong></p>
+                           <p className='textalign-center'>{weather.daily.summary}</p>
+                           <ResponsiveContainer width='100%' height={400}>
+                              <ComposedChart data={forecastChartData} margin={{top: 20, right: 20, bottom: 20, left: 20}}>
+                                 <CartesianGrid stroke='#f5f5f5'/>
+                                 <XAxis dataKey="name"/>
+                                 <YAxis yAxisId='left' label={{ value: 'F', angle: 0, position: 'insideLeft'}}/>
+                                 <YAxis yAxisId='right' orientation='right' label={{ value: 'In.', angle: 0, position: 'insideRight'}}/>
+                                 <Tooltip />
+                                 <Legend />
+                                 <Area yAxisId='right' type='monotone' dataKey='snow' fill='#8884d8' stroke='#8884d8'/>
+                                 <Bar yAxisId='left' dataKey='tmp' barSize={20} fill='#413ea0' />
+                                 <Line yAxisId='right' type='monotone' dataKey='rain' stroke='#ff7300' />
+                              </ComposedChart>
+                           </ResponsiveContainer>
+                        </Segment>
+                     </Grid.Column>
+                  </Grid.Row>
+                  <Grid.Row>
+                     <Grid.Column>
+                        <Segment basic>
+                           <Header as ='h2' textAlign='center' content='Interactive Trail Map' color='blue'></Header>
+                           <iframe title={mountain.name} src={`https://openskimap.org/#12/${this.state.lat}/${this.state.lon}`} height="400" width="100%" frameBorder="0"></iframe>
+                        </Segment>
+                     </Grid.Column>
+                  </Grid.Row>
+                  <Grid.Row>
+                     <Grid.Column>
+                        <Segment basic>
+                           <Button fluid content='Edit' color='blue' as={Link} to={`/mountains/${mountain.id}/edit`}/>
+                        </Segment>
+                     </Grid.Column>
+                     <Grid.Column>
+                        <Segment basic>
+                           <Button fluid content='Delete' color='red' onClick={this.delete}/>
+                        </Segment>
+                     </Grid.Column>
+                  </Grid.Row>
+               </Grid>
+            </Fragment>
+         </div>
       ) : null
    }
 }

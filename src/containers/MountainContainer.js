@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import MountainCard from '../components/MountainCard'
-import {Segment, Grid, Header, Button} from 'semantic-ui-react'
+import {Segment, Grid, Header, Button, Icon} from 'semantic-ui-react'
 import {withRouter, Link} from 'react-router-dom'
+import mountains from '../style/icons/noun_Mountains_1579651.png'
 const Cookies = require('cookies-js')
 
 class MountainContainer extends Component {
@@ -44,7 +45,11 @@ class MountainContainer extends Component {
       return (
          <div className='padded-top-small'>
             <Grid columns={5} stackable centered>
-               <Header as='h2' content={this.props.region ? this.props.region.name : 'All Mountains'}/>
+               <Header as='h2'>
+                  <img alt='' src={mountains}></img>
+                  <Header.Content>{this.props.region ? this.props.region.name : 'All Mountains'}</Header.Content>
+                  <img alt='' src={mountains}></img>
+               </Header>
                <Grid.Row>
                   {this.props.mountains.map((mtn, i) => (
                      <Grid.Column key={i}>
