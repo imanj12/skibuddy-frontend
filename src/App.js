@@ -50,7 +50,7 @@ class App extends Component {
     return (
       <BrowserRouter>
         <Fragment>
-          <NavBar />
+          {userData ? <NavBar userData={userData} setUser={this.setUser}/> : null}
           <Switch>
             <Route exact path='/' render={() => <Redirect to='/login'/>} />
 
@@ -113,7 +113,7 @@ class App extends Component {
             <Route path='/mountains/:id' render={(props) => {
               let mtnId = props.match.params.id
               return userData ? (
-                <MountainDetails mountain={userData.mountains.find(mtn => mtn.id == mtnId)} userFetch={this.userFetch}/>
+                <MountainDetails mountain={userData.mountains.find(mtn => mtn.id == mtnId)} userFetch={this.userFetch} userData={userData}/>
               ) : null
             }} />
             

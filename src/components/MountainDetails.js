@@ -42,7 +42,10 @@ class MountainDetails extends Component {
          this.setState({
             lat: data.results[0].geometry.location.lat,
             lon: data.results[0].geometry.location.lng
-         }, () => this.getWeather())
+         }, () => { 
+            this.getDriveTime()
+            this.getWeather()
+         })
       })
    }
 
@@ -59,6 +62,7 @@ class MountainDetails extends Component {
       })
       .then(res => res.json())
       .then(data => {
+         this.setIcons(data)
          this.setState({
             weather: {currently: data.currently, daily: data.daily}
          }, () => this.setWeatherData())
@@ -103,6 +107,21 @@ class MountainDetails extends Component {
       }
       this.setState({forecastChartData: data})
    }
+
+   getDriveTime = () => {
+      let url = `http://localhost:3000/drivetime/${this.props.userData.address}/${this.props.userData.city}/${this.props.userData.state}/${this.state.lat}/${this.state.lon}`
+      const token = Cookies.get('token')
+      console.log(url)
+      fetch(url, {
+         method: 'GET',
+         headers: {
+            "Content-Type":"application/json",
+            "Authorization":`Bearer ${token}` 
+         }
+      })
+         .then(r => r.json())
+         .then(data => console.log(data))
+   }
    
    delete = (event) => {
       let url = `http://localhost:3000/mountains/${this.props.mountain.id}`
@@ -117,13 +136,36 @@ class MountainDetails extends Component {
       .then(() => this.props.userFetch())
       .then(() => this.props.history.push('/'))
    }
+   
+   // update this later to allow for a sensible default in case API changes
+   setIcons = (weather) => {
+      // eslint-disable-next-line default-case
+      switch (weather.currently.icon) {
+         case 'clear-day':
+            weather.currently.icon = 'day-sunny'
+            break
+         case 'clear-night':
+            weather.currently.icon = 'night-clear'
+            break
+         case 'wind':
+            weather.currently.icon = 'windy'
+            break
+         case 'partly-cloudy-day':
+            weather.currently.icon = 'day-cloudy'
+            break
+         case 'partly-cloudy-night':
+            weather.currently.icon = 'night-cloudy'
+            break
+      }
+   }
 
    render() {
       const { mountain } = this.props
       const { weather, forecastChartData } = this.state
+      
       return weather ? (
          <Fragment>
-            <Header as='h2' icon textAlign='center'>
+            <Header as='h1' icon textAlign='center'>
                {/* <Icon name='globe' circular /> */}
                <Header.Content>{mountain.name}</Header.Content>
                <Header.Subheader>{mountain.city}, {mountain.state}</Header.Subheader>
@@ -131,16 +173,22 @@ class MountainDetails extends Component {
             <Grid columns={2} centered stackable>
                <Grid.Row>
                   <Grid.Column>
-                     <Segment basic>
-                        <Header as='h3' textAlign='center' content='Current Conditions'></Header>
-                        <p className='textalign-center'>{weather.currently.summary}</p>
-                        <p className='textalign-center'>{`Temp: ${weather.currently.temperature} F`}</p>
-                        <p className='textalign-center'>{`Wind Speed: ${weather.currently.windSpeed} mph || Gusts: ${weather.currently.windGust} mph`} </p>
+                     <Segment basic textAlign='center'>
+                        <Header as='h2' textAlign='center' content='Current Conditions' color='teal'></Header>
+                        {console.log(weather.currently.icon)}
+                        <i className={`wi wi-${weather.currently.icon}`}></i>
+                        <h3 className='textalign-center'>
+                           <strong>{`${weather.currently.temperature} ºF`} - {weather.currently.summary}</strong>
+                        </h3>
+                        <h4 className='textalign-center'>{`Wind Speed: ${weather.currently.windSpeed} mph`} </h4>
+                        <h4 className='textalign-center'>{`Gusts: ${weather.currently.windGust} mph`} </h4>
+                        <h4 className='textalign-center'>{`Relative humidity: ${weather.currently.humidity}`} </h4>
+                        <h4 className='textalign-center'>{`Visibility: ${weather.currently.visibility} miles`} </h4>
                      </Segment>
                   </Grid.Column>
                   <Grid.Column>
                      <Segment basic>
-                        <Header as='h3' textAlign='center' content='Forecast'></Header>
+                        <Header as='h2' textAlign='center' content='Forecast' color='teal'></Header>
                         <p className='textalign-center'><strong>Summary</strong></p>
                         <p className='textalign-center'>{weather.daily.summary}</p>
                         <ResponsiveContainer width='100%' height={400}>
@@ -162,13 +210,8 @@ class MountainDetails extends Component {
                <Grid.Row>
                   <Grid.Column>
                      <Segment basic>
-                        <Header as ='h3' textAlign='center' content='Interactive Trail Map'></Header>
+                        <Header as ='h2' textAlign='center' content='Interactive Trail Map' color='teal'></Header>
                         <iframe title={mountain.name} src={`https://openskimap.org/#12/${this.state.lat}/${this.state.lon}`} height="400" width="100%" frameBorder="0"></iframe>
-                     </Segment>
-                  </Grid.Column>
-                  <Grid.Column>
-                     <Segment basic>
-                        <p className='textalign-center'>Drive Time here</p>
                      </Segment>
                   </Grid.Column>
                </Grid.Row>
