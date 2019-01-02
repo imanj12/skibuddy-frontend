@@ -90,12 +90,12 @@ class NavBar extends Component {
         <Menu.Menu position='right'>
           <Menu.Item as={Link} to='/regions/new'
             name='new region'
-            active={activeItem === 'new region'}
+            // active={activeItem === 'new region'}
             onClick={this.handleItemClick}
           />
           <Menu.Item as={Link} to='/mountains/new'
             name='new mountain'
-            active={activeItem === 'new mountain'}
+            // active={activeItem === 'new mountain'}
             onClick={this.handleItemClick}
           />
         <Menu.Item>

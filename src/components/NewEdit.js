@@ -93,7 +93,11 @@ class NewEdit extends Component {
       .then(r => r.json())
       .then(data => {
          this.props.userFetch()
-         this.props.history.push(`/mountains/${data.id}`)
+         if (method === 'PUT') {
+            this.props.history.push(`/mountains/${data.id}`)
+         } else {
+            this.props.history.push('/')
+         }
       })
       // .then(() => this.props.userFetch())
       // .then(() => this.props.history.push('/'))
