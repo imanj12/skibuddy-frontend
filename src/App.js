@@ -94,8 +94,13 @@ class App extends Component {
               
               <Route path='/regions/:id' render={(props) => {
                 let rgnId = parseInt(props.match.params.id)
+                console.log(rgnId)
                 return userData ? (
-                  <MountainContainer mountains={userData.mountains.filter(mtn => mtn.region_id === rgnId)} region={userData.regions.find(rgn => rgn.id == rgnId)} userFetch={this.userFetch}/>
+                  <MountainContainer 
+                    // mountains={userData.mountains.filter(mtn => mtn.region_id == rgnId)}
+                    mountains={userData.regions.find(rgn => rgn.id == rgnId).mountains}
+                    region={userData.regions.find(rgn => rgn.id == rgnId)} 
+                    userFetch={this.userFetch}/>
                 ) : null
               }} />
               
