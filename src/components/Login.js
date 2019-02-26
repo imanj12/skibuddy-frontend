@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
-import {Grid, Header, Form, Image, Button, Segment, Message} from 'semantic-ui-react'
+import {Grid, Header, Form, Button, Segment, Message} from 'semantic-ui-react'
 import {Redirect, Link} from 'react-router-dom'
 const Cookies = require('cookies-js')
 
 class Login extends Component {
 
   componentDidMount() {
-    document.body.style.backgroundImage = "url('https://cdn.powder.com/uploads/2017/12/AiguileDeLAmone_HeliSki_%C2%A9www.jeremy-bernard.com-3245.jpg')"  }
+    document.body.style.backgroundImage = "url('https://cdn.powder.com/uploads/2017/12/AiguileDeLAmone_HeliSki_%C2%A9www.jeremy-bernard.com-3245.jpg')"  
+  }
 
   componentWillUnmount() {
     document.body.style.backgroundImage = ""
@@ -53,6 +54,7 @@ class Login extends Component {
           </Segment>
           <Form size='large' onSubmit={this.handleLoginSubmit}>
               <Segment stacked>
+                <Message content="Hint: Sign in with username 'test' and password 'test' to demo the app with pre-populated ski mountains. Or, create an account below."/>
                 <Form.Input name='username' fluid icon='user' iconPosition='left' placeholder='Username' />
                 <Form.Input
                 name='password'
