@@ -70,7 +70,7 @@ class Login extends Component {
               </Segment>
           </Form>
           <Message>
-              New to us? <Link to='/signup'>Sign up</Link>
+              New user? <Link to='/signup'>Sign up</Link>
           </Message>
           </Grid.Column>
         </Grid>
