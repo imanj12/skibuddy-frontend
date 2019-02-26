@@ -53,7 +53,8 @@ class NewEditRegion extends Component {
 
    mtnOptions = () => {
       let mtnOptions = []
-      let mtns = this.props.allMtns.filter(mtn => mtn.region_id == null)
+      // let mtns = this.props.allMtns.filter(mtn => mtn.region_id == null)
+      let mtns = this.props.allMtns.filter(mtn => mtn.region == null)
       for (let i=0;i<mtns.length;i++) {
          mtnOptions.push({ key: mtns[i].id, value: mtns[i].id, text: mtns[i].name })
       }

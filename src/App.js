@@ -88,7 +88,11 @@ class App extends Component {
               <Route path='/regions/:id/edit' render={(props) => {
                 let rgnId = props.match.params.id
                 return userData ? (
-                  <NewEditRegion region={userData.regions.find(rgn => rgn.id == rgnId)} userId={userData.id} userFetch={this.userFetch} allMtns={userData.mountains}/>
+                  <NewEditRegion 
+                    region={userData.regions.find(rgn => rgn.id == rgnId)} 
+                    userId={userData.id} 
+                    userFetch={this.userFetch} 
+                    allMtns={userData.mountains}/>
                 ) : null
               }} />
               
