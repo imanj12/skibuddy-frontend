@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from 'react'
 import {Form, Header, Button, Grid, Dropdown} from 'semantic-ui-react'
 import {withRouter} from 'react-router-dom'
+import {URL} from '../constants/constants'
 const Cookies = require('cookies-js')
 
 class NewEditRegion extends Component {
@@ -28,7 +29,7 @@ class NewEditRegion extends Component {
          name: this.state.name,
          user_id: this.props.userId
       }
-      let url = 'http://localhost:3000/regions'
+      let url = URL + '/regions'
       let method = 'POST'
 
       if (this.props.region) {
@@ -70,7 +71,7 @@ class NewEditRegion extends Component {
             let data = { region_id: regionId }
             console.log(data)
             console.log(mtns[i])
-            const url = `http://localhost:3000/mountains/${mtns[i]}`
+            const url = URL + `/mountains/${mtns[i]}`
             fetch(url, {
                method: 'PATCH',
                headers: {

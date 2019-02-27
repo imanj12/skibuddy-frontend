@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {Form, Button, Grid, Header, Message} from 'semantic-ui-react'
+import {URL} from '../constants/constants'
 
 class SignUp extends Component {
    state = {
@@ -31,7 +32,7 @@ class SignUp extends Component {
          state: this.state.state
       }}
       
-      let url = 'http://localhost:3000/users'
+      const url = URL + '/users'
       let method = 'POST'
 
       fetch(url, {

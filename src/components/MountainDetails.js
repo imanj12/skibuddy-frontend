@@ -3,6 +3,7 @@ import { Header, Grid, Segment, Button } from 'semantic-ui-react'
 import {ResponsiveContainer, ComposedChart, Line, Area, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'recharts'
 import * as moment from 'moment'
 import {Link, withRouter} from 'react-router-dom'
+import { URL } from '../constants/constants' 
 const Cookies = require('cookies-js')
 
 class MountainDetails extends Component {
@@ -28,7 +29,7 @@ class MountainDetails extends Component {
 
    // starts a chain of function calls that each depend on new state
    getLatLons = () => {
-      let url = `http://localhost:3000/geocode/${this.props.mountain.name}%20ski%20${this.props.mountain.state}`
+      const url = URL + `/geocode/${this.props.mountain.name}%20ski%20${this.props.mountain.state}`
       const token = Cookies.get('token')
       fetch(url, {
          method: 'GET',
@@ -51,7 +52,7 @@ class MountainDetails extends Component {
 
    // invoked inside getLatLons after set state
    getWeather = () => {
-      let url = `http://localhost:3000/weather/forecast/${this.state.lat}/${this.state.lon}`
+      const url = URL + `/weather/forecast/${this.state.lat}/${this.state.lon}`
       const token = Cookies.get('token')
       fetch(url, {
          method: 'GET',
@@ -109,7 +110,7 @@ class MountainDetails extends Component {
    }
 
    getDriveTime = () => {
-      let url = `http://localhost:3000/drivetime/${this.props.userData.address}/${this.props.userData.city}/${this.props.userData.state}/${this.state.lat}/${this.state.lon}`
+      const url = URL + `/drivetime/${this.props.userData.address}/${this.props.userData.city}/${this.props.userData.state}/${this.state.lat}/${this.state.lon}`
       const token = Cookies.get('token')
       fetch(url, {
          method: 'GET',
@@ -123,7 +124,7 @@ class MountainDetails extends Component {
    }
    
    delete = (event) => {
-      let url = `http://localhost:3000/mountains/${this.props.mountain.id}`
+      const url = URL + `/mountains/${this.props.mountain.id}`
       const token = Cookies.get('token')
       fetch(url, {
          method: 'DELETE',

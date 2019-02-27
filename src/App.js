@@ -13,6 +13,7 @@ import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom'
 import './style/css/weather-icons.min.css'
 import './style/css/animations.css'
 import {Sticky} from 'semantic-ui-react'
+import { URL } from './constants/constants'
 const Cookies = require('cookies-js')
 
 class App extends Component {
@@ -34,7 +35,7 @@ class App extends Component {
   // fetch data of specific user if already logged in
   userFetch = () => {
     const token = Cookies.get('token')
-    const url = 'http://localhost:3000/profile'
+    const url = URL + '/profile'
     fetch(url, {
       method: 'GET',
       headers: {

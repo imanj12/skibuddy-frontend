@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {Grid, Header, Form, Button, Segment, Message} from 'semantic-ui-react'
 import {Redirect, Link} from 'react-router-dom'
+import { URL } from '../constants/constants'
 const Cookies = require('cookies-js')
 
 class Login extends Component {
@@ -14,7 +15,7 @@ class Login extends Component {
   }
 
    userLogin = (username, password) => {
-      const url = 'http://localhost:3000/login'
+      const url = URL + '/login'
       let data = { user: { username: username, password: password } }
       fetch(url, {
         method: 'POST',

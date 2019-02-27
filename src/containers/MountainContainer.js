@@ -3,6 +3,7 @@ import MountainCard from '../components/MountainCard'
 import {Segment, Grid, Header, Button, Icon} from 'semantic-ui-react'
 import {withRouter, Link} from 'react-router-dom'
 import mountains from '../style/icons/noun_Mountains_1579651.png'
+import {URL} from '../constants/constants'
 const Cookies = require('cookies-js')
 
 class MountainContainer extends Component {
@@ -14,7 +15,7 @@ class MountainContainer extends Component {
       for(let i=0;i<mtns.length;i++) {
          let data = { region_id: null }
          console.log(mtns[i])
-         const url = `http://localhost:3000/mountains/${mtns[i].id}`
+         const url = URL + `/mountains/${mtns[i].id}`
          fetch(url, {
             method: 'PATCH',
             headers: {
@@ -28,7 +29,7 @@ class MountainContainer extends Component {
    }
    
    deleteRegion = (event) => {
-      const url = `http://localhost:3000/regions/${this.props.region.id}`
+      const url = URL + `/regions/${this.props.region.id}`
       const token = Cookies.get('token')
       fetch(url, {
          method: 'DELETE',

@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Form, Header, Button, Grid} from 'semantic-ui-react'
 import {withRouter} from 'react-router-dom'
+import {URL} from '../constants/constants'
 const Cookies = require('cookies-js')
 
 class NewEdit extends Component {
@@ -73,7 +74,7 @@ class NewEdit extends Component {
          data.region_id = null
       }
 
-      let url = 'http://localhost:3000/mountains'
+      let url = URL + '/mountains'
       let method = 'POST'
 
       if (this.props.mountain) {
