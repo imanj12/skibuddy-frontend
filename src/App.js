@@ -9,6 +9,7 @@ import NewEdit from './components/NewEdit'
 import NewEditRegion from './components/NewEditRegion'
 import Login from './components/Login'
 import SignUp from './components/SignUp'
+import Welcome from './components/Welcome'
 import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom'
 import './style/css/weather-icons.min.css'
 import './style/css/animations.css'
@@ -70,6 +71,7 @@ class App extends Component {
               <Route path='/home' render={() => (
                 userData ? ( 
                   <Fragment>
+                    <Welcome/>
                     <RegionContainer regions={userData.regions}/>
                     <MountainContainer mountains={userData.mountains}/>
                   </Fragment> 
