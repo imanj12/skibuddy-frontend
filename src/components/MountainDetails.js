@@ -44,7 +44,7 @@ class MountainDetails extends Component {
             lat: data.results[0].geometry.location.lat,
             lon: data.results[0].geometry.location.lng
          }, () => { 
-            this.getDriveTime()
+            // this.getDriveTime()
             this.getWeather()
          })
       })

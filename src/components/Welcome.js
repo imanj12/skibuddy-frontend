@@ -9,7 +9,7 @@ const Welcome = () => {
             <Message.Content>
             <p>SkiBuddy helps you quickly check weather conditions and browse an interactive trail map at most, if not all, ski resorts in the United States.</p>
    
-            <p>To add a mountain, select "New Mountain" in the navigation bar above. If you'd like to add this mountain to a region, please create the region first.</p>
+            <p>To add a ski resort to your collection, select "New Mountain" in the navigation bar above. If you'd like to add this mountain to a region, please create the region first.</p>
 
             <p>Browse the mountains and regions you've already created below.</p>
             </Message.Content>

@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Form, Header, Button, Grid} from 'semantic-ui-react'
+import {Form, Header, Button, Grid, Container, Message} from 'semantic-ui-react'
 import {withRouter} from 'react-router-dom'
 import {URL} from '../constants/constants'
 const Cookies = require('cookies-js')
@@ -113,22 +113,35 @@ class NewEdit extends Component {
       return (
          <div className='padded-top-small'>
             <Grid columns={1} stackable centered>
-               <Grid.Row>
-                  <Form onSubmit={this.handleSubmit}>
+               <Container text>
+                  <Form onSubmit={this.handleSubmit} widths='equal'>
                      <Header as='h1' content={this.props.mountain ? `Edit ${this.props.mountain.name}` : 'Create a mountain'}/>
+                     
+                     <Message size='small'>
+                        <Message.Header>Hint</Message.Header>
+                        <Message.Content>
+                        <p>Weather conditions and the interactive trail map rely on querying external APIs and, as such, require inputing accurate information below. Please double check the resort name, city and state by first searching <a href='http://maps.google.com' target='_blank' rel="noopener noreferrer">Google Maps.</a></p>
+                        </Message.Content>
+                     </Message>
+                     
                      <Form.Input required name='name' value={this.state.name} label='Resort Name' placeholder='e.g. Heavenly' onChange={this.handleChange} />
+                     
                      <Form.Group>
                         <Form.Input required name='city' value={this.state.city} label='City' placeholder='e.g. South Lake Tahoe' onChange={this.handleChange} />
                         <Form.Select required search name='state' label='State' value={this.state.state} placeholder='Select one' options={this.getStates()} onChange={this.handleChange} />
                      </Form.Group>
-                     <Form.Input name='trailmap' value={this.state.trailmap} label='Trailmap URL' placeholder='Must be of .jpg file type' onChange={this.handleChange}/>
+                     
+                     {/* <Form.Input name='trailmap' value={this.state.trailmap} label='Trailmap URL' placeholder='Must be of .jpg file type' onChange={this.handleChange}/> */}
+                     
                      <Form.Input name='url' value={this.state.url} label='Resort URL' placeholder='This is just a convenience...' onChange={this.handleChange}/>
                      
                      <Header as='h2' content='Attach to a Region (optional)'/>
+                     
                      <Form.Select search name='region_id' value={this.state.region_id} label='Pick a region' options={this.props.regions ? this.getRegions() : null} onChange={this.handleChange}/>
+                     
                      <Button color='blue' type='submit'>Submit</Button>
                   </Form>
-               </Grid.Row>
+               </Container>
             </Grid>
          </div>
       )
