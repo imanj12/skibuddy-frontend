@@ -66,7 +66,7 @@ class App extends Component {
                 <Login setUser={this.setUser} setBackground={this.setBackground} clearBackground={this.clearBackground}/>
               )} />
 
-              <Route path='/signup' render={() => <SignUp />} />
+              <Route path='/signup' render={() => <SignUp setUser={this.setUser}/>} />
               
               <Route path='/home' render={() => (
                 userData ? ( 

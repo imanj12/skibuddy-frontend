@@ -3,7 +3,7 @@ import { Container, Message } from 'semantic-ui-react'
 
 const Welcome = () => {
    return (
-      <Container text>
+      <Container text className='padded-top-small'>
          <Message>
             <Message.Header>Welcome!</Message.Header>
             <Message.Content>
@@ -11,7 +11,7 @@ const Welcome = () => {
    
             <p>To add a ski resort to your collection, select "New Mountain" in the navigation bar above. If you'd like to add this mountain to a region, please create the region first.</p>
 
-            <p>Browse the mountains and regions you've already created below.</p>
+            <p>Browse the mountains and regions already created below.</p>
             </Message.Content>
          </Message>
       </Container>

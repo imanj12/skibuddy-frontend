@@ -120,7 +120,7 @@ class NewEdit extends Component {
                      <Message size='small'>
                         <Message.Header>Hint</Message.Header>
                         <Message.Content>
-                        <p>Weather conditions and the interactive trail map rely on querying external APIs and, as such, require inputing accurate information below. Please double check the resort name, city and state by first searching <a href='http://maps.google.com' target='_blank' rel="noopener noreferrer">Google Maps.</a></p>
+                        <p>Weather conditions and the interactive trail map rely on querying external APIs and, as such, require inputing accurate information below. If you're uncertain, please double check the resort name, city and state by first searching <a href='http://maps.google.com' target='_blank' rel="noopener noreferrer">Google Maps.</a></p>
                         </Message.Content>
                      </Message>
                      
@@ -133,7 +133,7 @@ class NewEdit extends Component {
                      
                      {/* <Form.Input name='trailmap' value={this.state.trailmap} label='Trailmap URL' placeholder='Must be of .jpg file type' onChange={this.handleChange}/> */}
                      
-                     <Form.Input name='url' value={this.state.url} label='Resort URL' placeholder='This is just a convenience...' onChange={this.handleChange}/>
+                     {/* <Form.Input name='url' value={this.state.url} label='Resort URL' placeholder='This is just a convenience...' onChange={this.handleChange}/> */}
                      
                      <Header as='h2' content='Attach to a Region (optional)'/>
                      

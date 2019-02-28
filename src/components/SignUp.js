@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import {Form, Button, Grid, Header, Message} from 'semantic-ui-react'
 import {URL} from '../constants/constants'
+const Cookies = require('cookies-js')
+const Capitalize = require('lodash/capitalize')
 
 class SignUp extends Component {
    state = {
@@ -44,9 +46,14 @@ class SignUp extends Component {
       })
          .then(r => r.json())
          .then(data => {
+            console.log(data)
             if (data.errors) {
                console.log(data.errors)
                this.setState({errors: data.errors})
+            } else {
+               Cookies.set('token', data.jwt)
+               this.props.setUser(data.user)
+               this.props.history.push('/home')
             }
          })
    }
@@ -63,6 +70,16 @@ class SignUp extends Component {
       return states
    }
 
+   mapErrors = () => {
+      const keys = Object.keys(this.state.errors)
+      return keys.map(key => {
+         let field = Capitalize(key)
+         field = field.replace('-', ' ')
+         const message = this.state.errors[key]
+         return `${field} ${message}`
+      })
+   }
+
    render() {
       return (
          <Grid textAlign='center' verticalAlign='middle'>
@@ -76,18 +93,18 @@ class SignUp extends Component {
                   <Message
                      error
                      header='Error'
-                     content={this.state.errors.username[0]}
+                     list={this.mapErrors()}
                   />) : null}
                   <Form.Input required name='username' label='Username' placeholder='Username' onChange={this.handleChange} />
                   <Form.Group widths='equal'>
                      <Form.Input required name='password' label='Password' placeholder='Password' type='password' onChange={this.handleChange} />
                      <Form.Input required name='rePassword' label='Re-enter Password' placeholder='Password' type='password' onChange={this.handleChange} />
                   </Form.Group>
-                  <Form.Input name='address' label='Street' placeholder='Street Address' onChange={this.handleChange} />
+                  {/* <Form.Input name='address' label='Street' placeholder='Street Address' onChange={this.handleChange} />
                   <Form.Group widths='equal'>
                      <Form.Input required name='city' label ='City' placeholder='City' onChange={this.handleChange} />
                      <Form.Select required search name='state' label='State' value={this.state.state} placeholder='Select one' options={this.getStates()} onChange={this.handleChange} />
-                  </Form.Group>
+                  </Form.Group> */}
                   <Button type='submit' color='blue'>Submit</Button>
                </Form>
             </Grid.Column>
