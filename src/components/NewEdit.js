@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {Form, Header, Button, Grid, Container, Message} from 'semantic-ui-react'
 import {withRouter} from 'react-router-dom'
 import {URL} from '../constants/constants'
+const Capitalize = require('lodash/capitalize')
 const Cookies = require('cookies-js')
 
 class NewEdit extends Component {
@@ -14,7 +15,8 @@ class NewEdit extends Component {
             state: this.props.mountain.state,
             trailmap: this.props.mountain.trailmap,
             url: this.props.mountain.url,
-            region_id: this.props.mountain.region_id
+            region_id: this.props.mountain.region_id,
+            errors: null
          }
       } else {
          this.state = {
@@ -23,7 +25,8 @@ class NewEdit extends Component {
             state: '',
             trailmap: '',
             url: '',
-            region_id: null
+            region_id: null,
+            errors: null
          }
       }
    }
@@ -67,8 +70,8 @@ class NewEdit extends Component {
          region_id: this.state.region_id
       }
       
-      console.log(data)
-      console.log(this.state.region_id)
+      // console.log(data)
+      // console.log(this.state.region_id)
 
       if (this.state.region_id === 0) {
          data.region_id = null
@@ -93,11 +96,16 @@ class NewEdit extends Component {
       })
       .then(r => r.json())
       .then(data => {
-         this.props.userFetch()
-         if (method === 'PUT') {
-            this.props.history.push(`/mountains/${data.id}`)
+         console.log(data)
+         if (data.errors) {
+            this.setState({ errors: data.errors })
          } else {
-            this.props.history.push('/')
+            this.props.userFetch()
+            if (method === 'PUT') {
+               this.props.history.push(`/mountains/${data.id}`)
+            } else {
+               this.props.history.push('/')
+            }
          }
       })
       // .then(() => this.props.userFetch())
@@ -107,6 +115,16 @@ class NewEdit extends Component {
    handleSubmit = (event) => {
       // event.preventDefault()
       this.postMountain()
+   }
+
+   mapErrors = () => {
+      const keys = Object.keys(this.state.errors)
+      return keys.map(key => {
+         let field = Capitalize(key)
+         field = field.replace('-', ' ')
+         let message = this.state.errors[key]
+         return `${field} ${message}`
+      })
    }
 
    render() {
@@ -123,6 +141,14 @@ class NewEdit extends Component {
                         <p>Weather conditions and the interactive trail map rely on querying external APIs and, as such, require inputing accurate information below. If you're uncertain, please double check the resort name, city and state by first searching <a href='http://maps.google.com' target='_blank' rel="noopener noreferrer">Google Maps.</a></p>
                         </Message.Content>
                      </Message>
+
+                     {this.state.errors ? (
+                        <Message 
+                           negative
+                           header='Error'
+                           content={this.state.errors}
+                        />
+                     ) : null}
                      
                      <Form.Input required name='name' value={this.state.name} label='Resort Name' placeholder='e.g. Heavenly' onChange={this.handleChange} />
                      
