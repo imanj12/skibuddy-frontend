@@ -146,7 +146,7 @@ class NewEdit extends Component {
                         <Message 
                            negative
                            header='Error'
-                           content={this.state.errors}
+                           content='Name has already been taken'
                         />
                      ) : null}
                      
