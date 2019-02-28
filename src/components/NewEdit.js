@@ -139,6 +139,8 @@ class NewEdit extends Component {
                         <Message.Header>Hint</Message.Header>
                         <Message.Content>
                         <p>Weather conditions and the interactive trail map rely on querying external APIs and, as such, require inputing accurate information below. If you're uncertain, please double check the resort name, city and state by first searching <a href='http://maps.google.com' target='_blank' rel="noopener noreferrer">Google Maps.</a></p>
+
+                        <p>You can add this mountain to an exisiting region now, or create a new region after this step with the "new Region" button and create the association on that page.</p>
                         </Message.Content>
                      </Message>
 
