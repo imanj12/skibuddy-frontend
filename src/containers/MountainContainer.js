@@ -29,6 +29,7 @@ class MountainContainer extends Component {
       }
    }
    
+   // delete a region
    deleteRegion = (event) => {
       const url = URL + `/regions/${this.props.region.id}`
       const token = Cookies.get('token')

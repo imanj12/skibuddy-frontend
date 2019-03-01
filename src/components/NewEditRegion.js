@@ -7,6 +7,7 @@ const Cookies = require('cookies-js')
 class NewEditRegion extends Component {
    constructor(props) {
       super(props)
+      // if this component rendered as a result of clicking Edit Region, then populate forms with existing information, else forms are blank for new region
       if (this.props.region) {
          this.state = {
             name: this.props.region.name,
@@ -24,6 +25,7 @@ class NewEditRegion extends Component {
       this.setState({ [data.name]: data.value })
    }
 
+   // use form data from state to create or edit region in backend
    postPatchRegion = () => {   
       const data = {
          name: this.state.name,
@@ -32,6 +34,7 @@ class NewEditRegion extends Component {
       let url = URL + '/regions'
       let method = 'POST'
 
+      // check if region props exist, meaning this is an edit form, therefore switch method to patch
       if (this.props.region) {
          url += `/${this.props.region.id}`
          method = 'PATCH'
@@ -52,6 +55,7 @@ class NewEditRegion extends Component {
          .then(() => this.props.history.push('/regions'))
    }
 
+   // create array to populate mountains dropdown
    mtnOptions = () => {
       let mtnOptions = []
       // let mtns = this.props.allMtns.filter(mtn => mtn.region_id == null)
@@ -61,16 +65,14 @@ class NewEditRegion extends Component {
       }
       return mtnOptions
    }
-
+   
+   // if mountains are added to region, then update those mountains in backend to create region association
    updateMtns = (regionId) => {
       if (this.state.mtns.length > 0) {
          let mtns = this.state.mtns
          const token = Cookies.get('token')
-         console.log(mtns)
          for(let i=0;i<mtns.length;i++) {
             let data = { region_id: regionId }
-            console.log(data)
-            console.log(mtns[i])
             const url = URL + `/mountains/${mtns[i]}`
             fetch(url, {
                method: 'PATCH',
@@ -102,16 +104,17 @@ class NewEditRegion extends Component {
                         value={this.state.name} 
                         label={this.props.region ? 'Edit Name' : 'Region Name'} 
                         placeholder='e.g. Denver Area'
-                        onChange={this.handleChange}/>
-                        <Fragment>
-                           <Header as='h4' content='Assign free mountain(s) to region' />
-                           <Dropdown fluid multiple search selection
-                              name='mtns'
-                              options={this.mtnOptions()}
-                              placeholder={this.mtnOptions().length < 1 ? 'All mountains assigned' : 'Select...'}
-                              onChange={this.handleChange}
-                           />
-                        </Fragment>
+                        onChange={this.handleChange}
+                     />
+                     <Fragment>
+                        <Header as='h4' content='Assign free mountain(s) to region' />
+                        <Dropdown fluid multiple search selection
+                           name='mtns'
+                           options={this.mtnOptions()}
+                           placeholder={this.mtnOptions().length < 1 ? 'All mountains assigned' : 'Select...'}
+                           onChange={this.handleChange}
+                        />
+                     </Fragment>
                      <Button color='blue' type='submit'>Submit</Button>
                   </Form> 
                </Grid.Row>

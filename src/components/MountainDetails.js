@@ -18,16 +18,20 @@ class MountainDetails extends Component {
    }
 
    componentDidMount() {
+      // retrieve lat and lon of mountain
+      // to-do: retrieve lat/lon only once upon mountain create/edit, so not always calling this API
       this.getLatLons()
    }
 
    componentDidUpdate(prevProps) {
+      // retrieve lat lon when component updates to show new mluntain (see to-do)
       if (prevProps.mountain.id !== this.props.mountain.id) {
          this.getLatLons()
       }
    }
 
-   // starts a chain of function calls that each depend on new state
+   // use mountain name and state to retrieve latitude and longitude for use in weather API 
+   // to-do: retrieve lat/lon only once upon mountain create/edit, so not always calling this API
    getLatLons = () => {
       const url = URL + `/geocode/${this.props.mountain.name}%20ski%20${this.props.mountain.state}`
       const token = Cookies.get('token')
@@ -44,12 +48,15 @@ class MountainDetails extends Component {
             lat: data.results[0].geometry.location.lat,
             lon: data.results[0].geometry.location.lng
          }, () => { 
+            // collect drive time from home address to local mountain
             // this.getDriveTime()
+            // use lat and lon to retrieve weather
             this.getWeather()
          })
       })
    }
 
+   // retrieves weather from Dark SKY API using lat and lon
    // invoked inside getLatLons after set state
    getWeather = () => {
       const url = URL + `/weather/forecast/${this.state.lat}/${this.state.lon}`
@@ -70,7 +77,8 @@ class MountainDetails extends Component {
       })
    }
 
-   // invoked inside getWeather after set state
+   // build array of weather forecast data for use in weather graph
+   // invoked inside getWeather
    setWeatherData = () => {
       let t = moment().format('dd')
       let tOne = moment().add(1, 'days').format('dd')
@@ -109,6 +117,8 @@ class MountainDetails extends Component {
       this.setState({forecastChartData: data})
    }
 
+   // retrieve drive time from home address to mountain
+   // (not currently used)
    getDriveTime = () => {
       const url = URL + `/drivetime/${this.props.userData.address}/${this.props.userData.city}/${this.props.userData.state}/${this.state.lat}/${this.state.lon}`
       const token = Cookies.get('token')
@@ -123,6 +133,7 @@ class MountainDetails extends Component {
          .then(data => console.log(data))
    }
    
+   // delete mountain from backend
    delete = (event) => {
       const url = URL + `/mountains/${this.props.mountain.id}`
       const token = Cookies.get('token')
@@ -137,7 +148,9 @@ class MountainDetails extends Component {
       .then(() => this.props.history.push('/'))
    }
    
-   // update this later to allow for a sensible default in case API changes
+   // use weather data to set correct weather icon
+   // invoked inside getWeather
+   // update this later to allow for a sensible default in case Dark Sky API changes
    setIcons = (weather) => {
       // eslint-disable-next-line default-case
       switch (weather.currently.icon) {
@@ -167,12 +180,12 @@ class MountainDetails extends Component {
          <div className='padded-top-small'>
             <Fragment>
                <Header as='h1' icon textAlign='center'>
-                  {/* <Icon name='globe' circular /> */}
                   <Header.Content>{mountain.name}</Header.Content>
                   <Header.Subheader>{mountain.city}, {mountain.state}</Header.Subheader>
                </Header>
+               
                <Grid columns={2} centered stackable>
-                  <Grid.Row>
+                  <Grid.Row> 
                      <Grid.Column>
                         <Segment basic textAlign='center'>
                            <Header as='h2' textAlign='center' content='Current Conditions' color='blue'></Header>
@@ -186,11 +199,14 @@ class MountainDetails extends Component {
                            <h4 className='textalign-center'>{`Visibility: ${weather.currently.visibility} miles`} </h4>
                         </Segment>
                      </Grid.Column>
+                     
                      <Grid.Column>
                         <Segment basic>
-                           <Header as='h2' textAlign='center' content='Forecast' color='blue'></Header>
+                           <Header as='h2' textAlign='center' content='Forecast' color='blue'/>
                            <p className='textalign-center'><strong>Summary</strong></p>
                            <p className='textalign-center'>{weather.daily.summary}</p>
+                           
+                           {/* this component comes from recharts.js */}
                            <ResponsiveContainer width='100%' height={400}>
                               <ComposedChart data={forecastChartData} margin={{top: 20, right: 20, bottom: 20, left: 20}}>
                                  <CartesianGrid stroke='#f5f5f5'/>
@@ -204,29 +220,35 @@ class MountainDetails extends Component {
                                  <Line yAxisId='right' type='monotone' dataKey='rain' stroke='#ff7300' />
                               </ComposedChart>
                            </ResponsiveContainer>
+                        
                         </Segment>
                      </Grid.Column>
+                  
                   </Grid.Row>
+                  
                   <Grid.Row>
                      <Grid.Column>
                         <Segment basic>
-                           <Header as ='h2' textAlign='center' content='Interactive Trail Map' color='blue'></Header>
+                           <Header as ='h2' textAlign='center' content='Interactive Trail Map' color='blue'/>
                            <iframe title={mountain.name} src={`https://openskimap.org/#12/${this.state.lat}/${this.state.lon}`} height="400" width="100%" frameBorder="0"></iframe>
                         </Segment>
                      </Grid.Column>
                   </Grid.Row>
+                  
                   <Grid.Row>
                      <Grid.Column>
                         <Segment basic>
                            <Button fluid content='Edit' color='blue' as={Link} to={`/mountains/${mountain.id}/edit`}/>
                         </Segment>
                      </Grid.Column>
+                     
                      <Grid.Column>
                         <Segment basic>
                            <Button fluid content='Delete' color='red' onClick={this.delete}/>
                         </Segment>
                      </Grid.Column>
                   </Grid.Row>
+
                </Grid>
             </Fragment>
          </div>
