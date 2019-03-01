@@ -24,6 +24,7 @@ class SignUp extends Component {
       this.postUser()
    }
 
+   // create user
    postUser = () => {
       let data = { user: {
          username: this.state.username,
@@ -58,7 +59,8 @@ class SignUp extends Component {
          })
    }
 
-   getStates = () => { // maybe store this function in App since it's used twice
+   // create list of states for state dropdown form
+   getStates = () => {
       // semantic UI select options in this format:
       // [{ key: 'af', value: 'af', text: 'Afghanistan' }, ...{}]
       let usaStates = require('usa-states').UsaStates
@@ -70,6 +72,7 @@ class SignUp extends Component {
       return states
    }
 
+   // if errors are returned after create user fetch, then set errors in state, then invoke this function to list to user in a message
    mapErrors = () => {
       const keys = Object.keys(this.state.errors)
       return keys.map(key => {
@@ -85,26 +88,33 @@ class SignUp extends Component {
          <Grid textAlign='center' verticalAlign='middle'>
             <Grid.Column style={{ maxWidth: 450 }}>
                <Header as='h2' color='blue' textAlign='center'>
-               {/* <Image src='/logo.png' />  */}
-               Create an account
+                  Create an account
                </Header>
-               <Form error onSubmit={this.handleSubmit} >
-               {this.state.errors ? (
-                  <Message
-                     error
-                     header='Error'
-                     list={this.mapErrors()}
-                  />) : null}
+               
+               <Form onSubmit={this.handleSubmit} >
+               
+                  {/* show errors if backend produces them */}
+                  {this.state.errors ? (
+                     <Message
+                        negative
+                        header='Error'
+                        list={this.mapErrors()}
+                     />) : null}
+                  
                   <Form.Input required name='username' label='Username' placeholder='Username' onChange={this.handleChange} />
+                  
                   <Form.Group widths='equal'>
                      <Form.Input required name='password' label='Password' placeholder='Password' type='password' onChange={this.handleChange} />
                      <Form.Input required name='rePassword' label='Re-enter Password' placeholder='Password' type='password' onChange={this.handleChange} />
                   </Form.Group>
+                  
+
                   {/* <Form.Input name='address' label='Street' placeholder='Street Address' onChange={this.handleChange} />
                   <Form.Group widths='equal'>
                      <Form.Input required name='city' label ='City' placeholder='City' onChange={this.handleChange} />
                      <Form.Select required search name='state' label='State' value={this.state.state} placeholder='Select one' options={this.getStates()} onChange={this.handleChange} />
                   </Form.Group> */}
+                  
                   <Button type='submit' color='blue'>Submit</Button>
                </Form>
             </Grid.Column>

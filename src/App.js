@@ -25,15 +25,17 @@ class App extends Component {
     }
   }
 
+  // if JWT token exists in cookies, fetch that user's data
   componentDidMount() {
     Cookies.get('token') && this.userFetch()
   }
 
+  // upon successful user data fetch, set user object with all associated data in state
   setUser = (user) => {
     this.setState({ userData: user })
   }
 
-  // fetch data of specific user if already logged in
+  // fetch user data, relies on JWT token
   userFetch = () => {
     const token = Cookies.get('token')
     const url = URL + '/profile'
@@ -53,17 +55,21 @@ class App extends Component {
     return (
       <BrowserRouter>
         <Fragment>
-          {userData ? (
+          
+          {/* only show navbar if user object exists in state (i.e. after logging in) */}
+          { userData ? (
             <Sticky>
               <NavBar userData={userData} setUser={this.setUser}/>
             </Sticky>
-            ) : null}
+            ) : null }
+          
           <div className='padded-sides'>
             <Switch>
+              
               <Route exact path='/' render={() => <Redirect to='/login'/>} />
 
               <Route path='/login' render={() => (
-                <Login setUser={this.setUser} setBackground={this.setBackground} clearBackground={this.clearBackground}/>
+                <Login setUser={this.setUser} />
               )} />
 
               <Route path='/signup' render={() => <SignUp setUser={this.setUser}/>} />

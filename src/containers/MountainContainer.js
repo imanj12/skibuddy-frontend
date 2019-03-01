@@ -8,6 +8,7 @@ const Cookies = require('cookies-js')
 
 class MountainContainer extends Component {
 
+   // when a region is deleted, remove the association between it and the mountains from the backend
    unassignMtns = () => {
       let mtns = this.props.mountains
       const token = Cookies.get('token')
